@@ -51,7 +51,15 @@ function Landing() {
         console.log(result)
     }
 
-
+    const deleteUserGoal = async () => {
+        const result = await axios.delete("http://localhost:5000/goals/deleteUserGoal",{
+            data: {
+                session:session,
+                goal_id: 1
+            }
+        })
+        console.log(result)
+    }
 
 
     useEffect(() => {
@@ -88,6 +96,8 @@ function Landing() {
                     <Button onClick={async () => await getUserGoals()}>getUserGoals</Button>
                     <Button onClick={async () => await addUserGoal()}>addUserGoal</Button>
                     <Button onClick={async () => await updateUserGoal()}>updateUserGoal</Button>
+                    <Button onClick={async () => await deleteUserGoal()}>deleteUserGoal</Button>
+
                 </div>
             }
         </div>

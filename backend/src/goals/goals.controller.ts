@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Query } from "@nestjs/common";
 import { GoalsService } from "./goals.service";
 import { createClient } from '@supabase/supabase-js'
 import { query } from "express";
@@ -23,5 +23,11 @@ export class GoalsController {
   async updateUserGoal(@Body() body){
     const result = await this.goalsService.updateUserGoal(body.session, body.goal)
     return result
+  }
+
+  @Delete("deleteUserGoal")
+  async deleteUserGoal(@Body() body){
+    const result = await this.goalsService.deleteUserGoal(body.session, body.goal_id)
+    return result;
   }
 }
