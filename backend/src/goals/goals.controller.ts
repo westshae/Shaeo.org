@@ -30,4 +30,28 @@ export class GoalsController {
     const result = await this.goalsService.deleteUserGoal(body.session, body.goal_id)
     return result;
   }
+
+  @Get("getUserUpdates")
+  async getUserUpdates(@Query() query) {
+    const result = await this.goalsService.getUserUpdates(query.session);
+    return result;
+  }
+
+  @Post("addUserUpdate")
+  async addUserUpdate(@Body() body){
+    const result = await this.goalsService.addUserUpdate(body.session, body.update)
+    return result;
+  }
+
+  @Post("updateUserUpdate")
+  async updateUserUpdate(@Body() body){
+    const result = await this.goalsService.updateUserUpdate(body.session, body.update)
+    return result
+  }
+
+  @Delete("deleteUserUpdate")
+  async deleteUserUpdate(@Body() body){
+    const result = await this.goalsService.deleteUserUpdate(body.session, body.update_id)
+    return result;
+  }
 }

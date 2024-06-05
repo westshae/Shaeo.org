@@ -61,6 +61,50 @@ function Landing() {
         console.log(result)
     }
 
+    const getUserUpdates = async () => {
+        const result = await axios.get("http://localhost:5000/goals/getUserUpdates",{params:{session}})
+        console.log(result.data)
+    }
+
+    const addUserUpdates = async () => {
+        const result = await axios.post("http://localhost:5000/goals/addUserUpdate",{
+            session:session,
+            update: {
+                goal_id: 635,
+                update_date_epoch: 123123123,
+                update_measurement: 234, 
+                update_text: "update_text"
+    
+            }
+  
+        })
+        console.log(result)
+ 
+    }
+    
+    const updateUserUpdate = async () => {
+        const result = await axios.post("http://localhost:5000/goals/updateUserUpdate",{
+            session:session,
+            update: {
+                update_id: 457,
+                update_measurement: 567, 
+                update_text: "bro this got updated"
+            }
+  
+        })
+        console.log(result)
+    }
+
+    const deleteUserUpdate = async () => {
+        const result = await axios.delete("http://localhost:5000/goals/deleteUserUpdate",{
+            data: {
+                session:session,
+                update_id: 457
+            }
+        })
+        console.log(result)
+    }
+
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -97,6 +141,11 @@ function Landing() {
                     <Button onClick={async () => await addUserGoal()}>addUserGoal</Button>
                     <Button onClick={async () => await updateUserGoal()}>updateUserGoal</Button>
                     <Button onClick={async () => await deleteUserGoal()}>deleteUserGoal</Button>
+                    <Button onClick={async () => await getUserUpdates()}>getUserUpdates</Button>
+                    <Button onClick={async () => await addUserUpdates()}>addUserUpdates</Button>
+                    <Button onClick={async () => await updateUserUpdate()}>updateUserUpdate</Button>
+                    <Button onClick={async () => await deleteUserUpdate()}>deleteUserUpdate</Button>
+
 
                 </div>
             }
