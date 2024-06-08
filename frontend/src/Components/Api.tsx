@@ -3,7 +3,6 @@ import axios from "axios"
 const getUserGoals = async (session: any) =>{
     const result = await axios.get("http://localhost:5000/goals/getUserGoals",{params:{session}})
     return result
-
 }
 
 const addUserGoal = async (session: any) =>{
@@ -43,11 +42,11 @@ const updateUserGoal = async (session: any) => {
     return result
 }
 
-const deleteUserGoal = async (session: any) => {
+const deleteUserGoal = async (session: any, goalId: number) => {
     const result = await axios.delete("http://localhost:5000/goals/deleteUserGoal",{
         data: {
             session:session,
-            goal_id: 1
+            goal_id: goalId
         }
     })
     return result
