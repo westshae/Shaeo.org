@@ -6,6 +6,11 @@ const getUserGoals = async (session: any) =>{
     return result
 }
 
+const getUserGoal = async (session: any, goal_id: number) => {
+    const result = await axios.get("http://localhost:5000/goals/getUserGoal",{params:{session: session, goal_id: goal_id}})
+    return result
+}
+
 const addUserGoal = async (session: any, goal: CreateGoalInterface) =>{
     const result = await axios.post("http://localhost:5000/goals/addUserGoal",{
         session:session,
@@ -96,4 +101,4 @@ const deleteUserUpdate = async (session: any) => {
     return result
 }
 
-export {getUserGoals, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate}
+export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate}

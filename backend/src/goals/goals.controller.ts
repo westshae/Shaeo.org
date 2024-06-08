@@ -13,6 +13,12 @@ export class GoalsController {
     return result;
   }
 
+  @Get("getUserGoal")
+  async getUserGoal(@Query() query) {
+    const result = await this.goalsService.getUserGoal(query.session, query.goal_id);
+    return result;
+  }
+
   @Post("addUserGoal")
   async addUserGoal(@Body() body){
     const result = await this.goalsService.addUserGoal(body.session, body.goal)

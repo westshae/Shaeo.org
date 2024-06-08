@@ -17,7 +17,16 @@ export class GoalsService {
     const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
 
     const goals = supabase.from("goals").select("*").eq("user_uuid", session.user.id);
+    
     return goals;
+  }
+  
+  async getUserGoal(session, goal_id) {
+    if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+
+    const goal = supabase.from("goals").select("*").eq("goal_id", goal_id).eq("user_uuid", session.user.id).single();
+    return goal;
   }
 
 

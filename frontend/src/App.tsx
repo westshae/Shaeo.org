@@ -20,8 +20,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/create" element={<Create />} />
-          <Route path="/dashboard/update" element={<Update />} />
-          <Route path="/dashboard/view" element={<View />} />
+          <Route path="/dashboard/update/:goal_id" element={<Update />} />
+          <Route path="/dashboard/view/:goal_id" element={<View />} />
         </Routes>
       </Router>
     </ThemeProvider>
