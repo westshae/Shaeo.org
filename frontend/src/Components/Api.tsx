@@ -1,24 +1,24 @@
 import axios from "axios"
+import { CreateGoalInterface } from "./Interfaces"
 
 const getUserGoals = async (session: any) =>{
     const result = await axios.get("http://localhost:5000/goals/getUserGoals",{params:{session}})
     return result
 }
 
-const addUserGoal = async (session: any) =>{
+const addUserGoal = async (session: any, goal: CreateGoalInterface) =>{
     const result = await axios.post("http://localhost:5000/goals/addUserGoal",{
         session:session,
         goal: {
-            category_id: 1,
-            start_date_epoch: 123123123,
-            end_date_epoch: 123123123,
-            outcome: "outcome",
-            measureable_type: "measurement_type",
-            measurement_count: 123,
-            achievable: "yes",
-            update_ids: null
+            category_id: goal.category_id,
+            start_date_epoch: goal.start_date_epoch,
+            end_date_epoch: goal.end_date_epoch,
+            outcome: goal.outcome,
+            measureable_type: goal.measureable_type,
+            measurement_count: goal.measurement_count,
+            achievable: goal.achievable,
+            update_ids: []
         }
-
     })
     return result
 }

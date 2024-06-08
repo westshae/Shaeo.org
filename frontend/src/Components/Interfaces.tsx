@@ -1,4 +1,4 @@
-interface CardInterface {
+interface GetGoalInterface {
     achievable: string;
     category_id: number;
     end_date_epoch: number;
@@ -12,7 +12,17 @@ interface CardInterface {
     title: string;
     description: string;
     image: string;
-    }
-  
+}
 
-export type {CardInterface}
+interface CreateGoalInterface {
+    category_id: number;
+    start_date_epoch: number | undefined;
+    end_date_epoch: number | undefined;
+    outcome: string;
+    measureable_type: string;
+    measurement_count: number | undefined;
+    achievable: string;
+    update_ids: number[];
+}
+
+export type { GetGoalInterface, CreateGoalInterface }

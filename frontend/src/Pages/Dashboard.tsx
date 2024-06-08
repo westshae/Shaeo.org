@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserGoals, addUserGoal, updateUserGoal, deleteUserGoal, getUserUpdates, addUserUpdates, updateUserUpdate, deleteUserUpdate } from "../Components/Api";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CardInterface } from "../Components/Interfaces";
+import { GetGoalInterface } from "../Components/Interfaces";
 
 const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
 
@@ -13,7 +13,7 @@ const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhb
 function Dashboard() {
     const [session, setSession] = useState<Session | null>(null)
     const [deleteMode, setDeleteMode] = useState<Boolean>(true)
-    const [goals, setGoals] = useState<CardInterface[]>([]);
+    const [goals, setGoals] = useState<GetGoalInterface[]>([]);
     const navigate = useNavigate()
 
     const wobble = keyframes`
@@ -54,7 +54,6 @@ function Dashboard() {
     useEffect(()=>{
         if(session && goals.length == 0){
             getUserGoals(session).then((result)=>{
-                console.log(result.data.data as CardInterface[])
                 setGoals(result.data.data)
             });
         }
@@ -111,15 +110,6 @@ function Dashboard() {
                 <div>
 
                     <Button onClick={async () => await supabase.auth.signOut()}>Log out</Button>
-
-                    <Button onClick={async () => await getUserGoals(session)}>getUserGoals</Button>
-                    <Button onClick={async () => await addUserGoal(session)}>addUserGoal</Button>
-                    <Button onClick={async () => await updateUserGoal(session)}>updateUserGoal</Button>
-                    <Button onClick={async () => await deleteUserGoal(session, 1)}>deleteUserGoal</Button>
-                    <Button onClick={async () => await getUserUpdates(session)}>getUserUpdates</Button>
-                    <Button onClick={async () => await addUserUpdates(session)}>addUserUpdates</Button>
-                    <Button onClick={async () => await updateUserUpdate(session)}>updateUserUpdate</Button>
-                    <Button onClick={async () => await deleteUserUpdate(session)}>deleteUserUpdate</Button>
                 </div>
             }
         </Container>
