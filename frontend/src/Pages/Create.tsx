@@ -74,7 +74,7 @@ function Create() {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     addUserGoal(session, formValues)
-    // console.log(formValues);
+    navigate("/dashboard")
   };
 
 
