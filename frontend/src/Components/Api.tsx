@@ -28,19 +28,19 @@ const addUserGoal = async (session: any, goal: CreateGoalInterface) =>{
     return result
 }
 
-const updateUserGoal = async (session: any) => {
+const updateUserGoal = async (session: any, goal_id:number, goal: CreateGoalInterface) => {
     const result = await axios.post("http://localhost:5000/goals/updateUserGoal",{
         session:session,
         goal: {
-            goal_id: 1,
-            category_id: 1,
-            start_date_epoch: 123123123,
-            end_date_epoch: 123123123,
-            outcome: "updated",
-            measureable_type: "measurement_type",
-            measurement_count: 123,
-            achievable: "yes",
-            update_ids: null
+            goal_id: goal_id,
+            category_id: goal.category_id,
+            start_date_epoch: goal.start_date_epoch,
+            end_date_epoch: goal.end_date_epoch,
+            outcome: goal.outcome,
+            measureable_type: goal.measureable_type,
+            measurement_count: goal.measurement_count,
+            achievable: goal.achievable,
+            update_ids: goal.update_ids
         }
 
     })

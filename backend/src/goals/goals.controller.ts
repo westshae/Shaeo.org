@@ -9,7 +9,9 @@ export class GoalsController {
 
   @Get("getUserGoals")
   async getUserGoals(@Query() query) {
+    console.log("lol")
     const result = await this.goalsService.getUserGoals(query.session);
+    console.log(result)
     return result;
   }
 

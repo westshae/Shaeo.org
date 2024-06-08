@@ -77,7 +77,7 @@ function Dashboard() {
                 </Grid>
                 {goals.map((card, index) => (
                     <Grid item xs={6} key={index}>
-                        <Card sx={{ maxWidth: 500, position: 'relative' }} onClick={() => navigate(`/dashboard/view/${card.goal_id}`)}>
+                        <Card sx={{ maxWidth: 500, position: 'relative' }} >
                             {deleteMode &&
                                 <IconButton
                                     aria-label="delete"
@@ -88,7 +88,7 @@ function Dashboard() {
                                 </IconButton>
                             }
 
-                            <CardActionArea>
+                            <CardActionArea onClick={() => navigate(`/dashboard/view/${card.goal_id}`)}>
                                 <CardMedia
                                     component="img"
                                     height="140"

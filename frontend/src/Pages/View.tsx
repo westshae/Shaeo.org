@@ -45,6 +45,7 @@ function View() {
 
     return (
         <div>
+            <h1>View</h1>
             {goal != null &&
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
