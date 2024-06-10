@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CreateGoalInterface } from "./Interfaces"
+import { CreateGoalInterface, CreateUpdateInterface } from "./Interfaces"
 
 const getUserGoals = async (session: any) =>{
     const result = await axios.get("http://localhost:5000/goals/getUserGoals",{params:{session}})
@@ -62,15 +62,19 @@ const getUserUpdates = async (session: any) => {
     return result
 }
 
-const addUserUpdates = async (session: any) => {
+const getGoalUpdates = async (session: any, goal_id: number) => {
+    const result = await axios.get("http://localhost:5000/goals/getGoalUpdates",{params:{session, goal_id}})
+    return result
+}
+
+const addUserUpdates = async (session: any, formValues: CreateUpdateInterface) => {
     const result = await axios.post("http://localhost:5000/goals/addUserUpdate",{
         session:session,
         update: {
-            goal_id: 635,
-            update_date_epoch: 123123123,
-            update_measurement: 234, 
-            update_text: "update_text"
-
+            goal_id: formValues.goal_id,
+            update_date_epoch: formValues.update_date_epoch,
+            update_measurement: formValues.update_measurement, 
+            update_text: formValues.update_text
         }
 
     })
@@ -101,4 +105,4 @@ const deleteUserUpdate = async (session: any) => {
     return result
 }
 
-export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate}
+export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate, getGoalUpdates}

@@ -64,7 +64,7 @@ function Dashboard() {
             <Typography variant="h3">Dashboard</Typography>
             <Grid container spacing={4} >
                 <Grid item xs={6}>
-                    <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
+                    <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard")}>
                         <CardActionArea sx={{ height: "100%" }}>
                             <CardContent>
                                 <AddCircleOutlineIcon style={{ fontSize: 60, color: 'gray', height: "100%" }} />
@@ -88,7 +88,7 @@ function Dashboard() {
                                 </IconButton>
                             }
 
-                            <CardActionArea onClick={() => navigate(`/dashboard/view/${card.goal_id}`)}>
+                            <CardActionArea onClick={() => navigate(`/dashboard/${card.goal_id}`)}>
                                 <CardMedia
                                     component="img"
                                     height="140"

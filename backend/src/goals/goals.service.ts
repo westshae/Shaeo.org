@@ -91,6 +91,17 @@ export class GoalsService {
     return result
   }
 
+  async getGoalUpdates(session, goal_id) {
+    if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const result = await supabase
+      .from('updates')
+      .select()
+      .eq('user_uuid', session.user.id)
+      .eq('goal_id', goal_id)
+    return result
+  }
+
   async addUserUpdate(session, update) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
     const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);

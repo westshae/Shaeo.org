@@ -9,9 +9,7 @@ export class GoalsController {
 
   @Get("getUserGoals")
   async getUserGoals(@Query() query) {
-    console.log("lol")
     const result = await this.goalsService.getUserGoals(query.session);
-    console.log(result)
     return result;
   }
 
@@ -44,6 +42,13 @@ export class GoalsController {
     const result = await this.goalsService.getUserUpdates(query.session);
     return result;
   }
+
+  @Get("getGoalUpdates")
+  async getGoalUpdates(@Query() query) {
+    const result = await this.goalsService.getGoalUpdates(query.session, query.goal_id);
+    return result;
+  }
+
 
   @Post("addUserUpdate")
   async addUserUpdate(@Body() body){

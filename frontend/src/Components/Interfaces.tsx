@@ -25,4 +25,11 @@ interface CreateGoalInterface {
     update_ids: number[];
 }
 
-export type { GetGoalInterface, CreateGoalInterface }
+interface CreateUpdateInterface {
+    goal_id: number | undefined;
+    update_date_epoch: number | undefined;
+    update_measurement: number | undefined;
+    update_text: string;
+}
+
+export type { GetGoalInterface, CreateGoalInterface, CreateUpdateInterface }
