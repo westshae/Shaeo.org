@@ -78,7 +78,6 @@ export class GoalsService {
       .delete()
       .eq('goal_id', goal_id)
       .eq('user_uuid', session.user.id)
-    console.log(result)
   }
 
   async getUserUpdates(session) {

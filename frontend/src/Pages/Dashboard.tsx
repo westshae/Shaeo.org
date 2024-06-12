@@ -1,8 +1,8 @@
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Container, Grid, IconButton, ThemeProvider, Typography, keyframes } from "@mui/material";
+import { AppBar, Box, Button, Card, CardActionArea, CardContent, CardMedia, Container, Grid, IconButton, Link, Toolbar, Typography, keyframes } from "@mui/material";
 import { Session, createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserGoals, addUserGoal, updateUserGoal, deleteUserGoal, getUserUpdates, addUserUpdates, updateUserUpdate, deleteUserUpdate } from "../Components/Api";
+import { getUserGoals, deleteUserGoal } from "../Components/Api";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { GetGoalInterface } from "../Components/Interfaces";
@@ -12,18 +12,9 @@ const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhb
 
 function Dashboard() {
     const [session, setSession] = useState<Session | null>(null)
-    const [deleteMode, setDeleteMode] = useState<Boolean>(true)
+    const [deleteMode, setDeleteMode] = useState<Boolean>(false)
     const [goals, setGoals] = useState<GetGoalInterface[]>([]);
     const navigate = useNavigate()
-
-    const wobble = keyframes`
-        0%, 100% { transform: rotate(0deg); }
-        15% { transform: rotate(-5deg); }
-        30% { transform: rotate(5deg); }
-        45% { transform: rotate(-5deg); }
-        60% { transform: rotate(5deg); }
-        75% { transform: rotate(-5deg); }
-        `;
 
     const handleDelete = async (goalId: number) => {
         await deleteUserGoal(session, goalId)
@@ -51,9 +42,9 @@ function Dashboard() {
         return () => subscription.unsubscribe()
     }, [])
 
-    useEffect(()=>{
-        if(session && goals.length == 0){
-            getUserGoals(session).then((result)=>{
+    useEffect(() => {
+        if (session && goals.length == 0) {
+            getUserGoals(session).then((result) => {
                 setGoals(result.data.data)
             });
         }
@@ -61,10 +52,14 @@ function Dashboard() {
 
     return (
         <Container>
-            <Typography variant="h3">Dashboard</Typography>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'left' }}>
+                <Button onClick={() => navigate("/")}><Typography>ProjectQ1</Typography></Button>
+                <Button onClick={async () => await supabase.auth.signOut()}><Typography>Sign Out</Typography></Button>
+                <Button onClick={() => setDeleteMode(!deleteMode)}><Typography>Toggle Deletion</Typography></Button>
+            </Toolbar>
             <Grid container spacing={4} >
                 <Grid item xs={6}>
-                    <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard")}>
+                    <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/goal/create")}>
                         <CardActionArea sx={{ height: "100%" }}>
                             <CardContent>
                                 <AddCircleOutlineIcon style={{ fontSize: 60, color: 'gray', height: "100%" }} />
@@ -81,14 +76,14 @@ function Dashboard() {
                             {deleteMode &&
                                 <IconButton
                                     aria-label="delete"
-                                    sx={{ position: 'absolute', top: 10, right: 10, color: 'white', zIndex: 2000, background: "red", borderRadius: "4px", '&:hover': { animation: `${wobble} 0.8s ease infinite`, background: "red" } }}
+                                    sx={{ position: 'absolute', top: 10, right: 10, color: 'white', zIndex: 2000, background: "red", borderRadius: "4px", '&:hover': { background: "maroon" } }}
                                     onClick={() => handleDelete(card.goal_id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>
                             }
 
-                            <CardActionArea onClick={() => navigate(`/dashboard/${card.goal_id}`)}>
+                            <CardActionArea onClick={() => navigate(`/dashboard/update/${card.goal_id}`)}>
                                 <CardMedia
                                     component="img"
                                     height="140"
@@ -106,12 +101,6 @@ function Dashboard() {
                     </Grid>
                 ))}
             </Grid>
-            {session &&
-                <div>
-
-                    <Button onClick={async () => await supabase.auth.signOut()}>Log out</Button>
-                </div>
-            }
         </Container>
     )
 }
