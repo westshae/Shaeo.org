@@ -1,13 +1,14 @@
-import { Box, FormControl, InputLabel, Select, MenuItem, TextField, TextareaAutosize, Button, Card, CardActionArea, CardContent, Grid, Typography, Toolbar, Stack } from "@mui/material"
+import { Box, InputLabel, TextField, TextareaAutosize, Button, Card, CardActionArea, CardContent, Typography, Toolbar, Stack } from "@mui/material"
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers"
 import { createClient, Session } from "@supabase/supabase-js"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { CreateGoalInterface, CreateUpdateInterface, GetGoalInterface } from "../Components/Interfaces"
+import { CreateGoalInterface, CreateUpdateInterface } from "../Components/Interfaces"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs"
 import { addUserGoal, addUserUpdates, getGoalUpdates, getUserGoal, updateUserGoal } from "../Components/Api"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import FlagIcon from '@mui/icons-material/Flag';
 
 
 const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
@@ -55,7 +56,7 @@ function Goal() {
       setSession(session)
 
       if (!session) {
-        navigate("/")
+        navigate("/login")
       }
     })
 
@@ -63,7 +64,7 @@ function Goal() {
   }, [])
 
   useEffect(() => {
-    if(hasInitOnce) return;
+    if (hasInitOnce) return;
     if (session && action == "create") {
       handleCreateMode();
       setHasInitOnce(true)
@@ -110,18 +111,14 @@ function Goal() {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    if (goal_id) {
-      if (actionMode == "update") {
-        updateUserGoal(session, parseInt(goal_id), formGoalValues)
-        navigate("/dashboard")
-      } else if (actionMode == "create") {
-        addUserGoal(session, formGoalValues)
-        navigate("/dashboard")
-      }
-    } else {
-      console.error("error: no goal_id to update")
+    if (goal_id && actionMode == "update") {
+      updateUserGoal(session, parseInt(goal_id), formGoalValues)
+      navigate("/dashboard")
+    } else if (actionMode == "create") {
+      addUserGoal(session, formGoalValues)
+      navigate("/dashboard")
     }
-  };
+  }
 
   const handleUpdateSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -172,23 +169,23 @@ function Goal() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'left' }}>
-        <Button onClick={() => navigate("/")}><Typography>ProjectQ1</Typography></Button>
-        <Button onClick={() => navigate("/dashboard")}><Typography>Dashboard</Typography></Button>
-        <Button onClick={async () => await supabase.auth.signOut()}><Typography>Sign Out</Typography></Button>
-        {actionMode == "update" && hasFieldsUpdated &&
-          <Button onClick={handleUpdateMode}><Typography>Reset Fields</Typography></Button>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon/>ProjectQ1</Typography></Button>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
+          <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
+          <Button onClick={async () => await supabase.auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
+          {actionMode == "update" && hasFieldsUpdated &&
+            <Button onClick={handleUpdateMode}><Typography variant="h6" sx={{ textTransform: 'none' }}>Reset Fields</Typography></Button>
 
-        }
+          }
+        </Box>
       </Toolbar>
-
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <DatePicker
           label="Goal End Date"
           onChange={(value) => handleDateChange("end_date_epoch", value?.toDate())}
           value={dayjs(formGoalValues.end_date_epoch)}
         />
-
         <TextareaAutosize
           minRows={4}
           placeholder="Outcome"
@@ -242,52 +239,52 @@ function Goal() {
             </CardActionArea>
           </Card>
         }
-                {addProgress && actionMode == "update" &&
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <Box component="form" onSubmit={handleUpdateSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <TextareaAutosize
-                  minRows={4}
-                  placeholder="Progress Notes"
-                  name="update_text"
-                  value={formUpdateValues.update_text}
+        {addProgress && actionMode == "update" &&
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Box component="form" onSubmit={handleUpdateSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <TextareaAutosize
+                minRows={4}
+                placeholder="Progress Notes"
+                name="update_text"
+                value={formUpdateValues.update_text}
+                onChange={handleUpdateChange}
+                style={{ width: '100%', padding: '10px' }}
+              />
+
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <InputLabel htmlFor="update_measurement">Measurement Count</InputLabel>
+
+                <TextField
+                  id="update_measurement"
+                  type="number"
+                  name="update_measurement"
                   onChange={handleUpdateChange}
-                  style={{ width: '100%', padding: '10px' }}
+                  value={formUpdateValues.update_measurement}
+                  sx={{ flex: 1 }}
                 />
-
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <InputLabel htmlFor="update_measurement">Measurement Count</InputLabel>
-
-                  <TextField
-                    id="update_measurement"
-                    type="number"
-                    name="update_measurement"
-                    onChange={handleUpdateChange}
-                    value={formUpdateValues.update_measurement}
-                    sx={{ flex: 1 }}
-                  />
-                </Box>
-
-                <Button type="submit" variant="contained">Submit New Update</Button>
               </Box>
-            </LocalizationProvider>
+
+              <Button type="submit" variant="contained">Submit New Update</Button>
+            </Box>
+          </LocalizationProvider>
         }
 
         {updates && updates.map((update) => (
-            <Card key={update.update_date_epoch} sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }}>
-              <CardActionArea sx={{ height: "100%" }}>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {update.update_date_epoch}
-                  </Typography>
-                  <Typography variant="h5" component="div">
-                    {update.update_measurement}
-                  </Typography>
-                  <Typography variant="h5" component="div">
-                    {update.update_text}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+          <Card key={update.update_date_epoch} sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }}>
+            <CardActionArea sx={{ height: "100%" }}>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  {update.update_date_epoch}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {update.update_measurement}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {update.update_text}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         ))}
 
 

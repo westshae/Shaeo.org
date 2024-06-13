@@ -12,13 +12,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{mx:"25%", my: "1rem"}}>
+      <Box sx={{mx:"20%", my: "1rem"}}>
         <Router>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/:action/:goal_id" element={<Goal />} />
+            <Route path="/dashboard/:action" element={<Goal />} />
           </Routes>
         </Router>
       </Box>

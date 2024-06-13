@@ -7,30 +7,30 @@ const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhb
 
 
 function Login() {
-    const [session, setSession] = useState<Session | null>(null)
+  const [session, setSession] = useState<Session | null>(null)
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
 
-    useEffect(() => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-      })
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
 
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-        if(session){
-            navigate("/Dashboard")
-        }
-      })
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+      if (session) {
+        navigate("/Dashboard")
+      }
+    })
 
-      return () => subscription.unsubscribe()
-    }, [])
+    return () => subscription.unsubscribe()
+  }, [])
 
-    return (<Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }}/>)
-    
+  return (<Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />)
+
 
 }
 
