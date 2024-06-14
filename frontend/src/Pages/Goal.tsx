@@ -9,6 +9,7 @@ import dayjs from "dayjs"
 import { addUserGoal, addUserUpdates, getGoalUpdates, getUserGoal, updateUserGoal } from "../Components/Api"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FlagIcon from '@mui/icons-material/Flag';
+import ResourceMenu from "../Components/ResourceMenu"
 
 
 const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
@@ -241,6 +242,7 @@ function Goal() {
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />ProjectQ1</Typography></Button>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
+          <ResourceMenu />
           <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
           <Button onClick={async () => await supabase.auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
           {actionMode == "update" && hasFieldsUpdated &&

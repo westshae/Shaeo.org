@@ -6,6 +6,10 @@ import Goal from "./Pages/Goal"
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './Components/Theme';
 import { Box, CssBaseline } from '@mui/material';
+import Outcomes from './Pages/Resources/Outcomes';
+import Measurements from './Pages/Resources/Measurements';
+import Deadlines from './Pages/Resources/Deadlines';
+import Achievability from './Pages/Resources/Achievability';
 
 function App() {
   document.title = "WLR Coffee"
@@ -20,6 +24,11 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/:action/:goal_id" element={<Goal />} />
             <Route path="/dashboard/:action" element={<Goal />} />
+            <Route path="/resources/outcomes" element={<Outcomes />} />
+            <Route path="/resources/measurements" element={<Measurements />} />
+            <Route path="/resources/deadlines" element={<Deadlines />} />
+            <Route path="/resources/achievability" element={<Achievability />} />
+
           </Routes>
         </Router>
       </Box>

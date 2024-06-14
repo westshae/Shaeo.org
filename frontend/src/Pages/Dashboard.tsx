@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FlagIcon from '@mui/icons-material/Flag';
 import { GetGoalInterface } from "../Components/Interfaces";
 import dayjs from "dayjs";
+import ResourceMenu from "../Components/ResourceMenu";
 
 const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
 
@@ -54,9 +55,9 @@ function Dashboard() {
     return (
         <Container>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon/>ProjectQ1</Typography></Button>
+                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />ProjectQ1</Typography></Button>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
-
+                    <ResourceMenu />
                     <Button onClick={async () => await supabase.auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
                 </Box>
 
@@ -74,7 +75,7 @@ function Dashboard() {
                         </CardActionArea>
                     </Card>
                 </Grid>
-                {goals.map((card:GetGoalInterface, index) => (
+                {goals.map((card: GetGoalInterface, index) => (
                     <Grid item xs={6} key={index}>
                         <Card sx={{ height: "100%", position: 'relative' }} >
                             <IconButton
@@ -91,10 +92,10 @@ function Dashboard() {
                                     <Typography gutterBottom variant="h5" component="div">
                                         {card.outcome}
                                     </Typography>
-                                    <Typography  variant="h6" component="div">
+                                    <Typography variant="h6" component="div">
                                         Completed by: {dayjs(card.end_date_epoch).format('ddd DD/MM/YY')}
                                     </Typography>
-                                    <Typography  variant="h6" component="div">
+                                    <Typography variant="h6" component="div">
                                         {card.update_ids.length} Progress Updates Since {dayjs(card.start_date_epoch).format('DD/MM/YY')}
                                     </Typography>
 
