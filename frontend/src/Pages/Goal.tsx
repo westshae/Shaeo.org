@@ -409,27 +409,27 @@ function Goal() {
         {addProgress && actionMode == "update" &&
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box component="form" onSubmit={handleUpdateSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextareaAutosize
-                minRows={4}
-                placeholder="Progress Notes"
-                name="update_text"
-                value={formUpdateValues.update_text}
-                onChange={handleUpdateChange}
-                style={{ width: '100%', padding: '10px' }}
-              />
-
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <InputLabel htmlFor="update_measurement">Measurement Count</InputLabel>
-
+              <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                So far, my progress is...
+                <TextareaAutosize
+                  placeholder="Progress Notes"
+                  name="update_text"
+                  value={formUpdateValues.update_text}
+                  onChange={handleUpdateChange}
+                  style={{ width: '60%' }}
+                />
+              </Typography>
+              <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                I've managed to complete
                 <TextField
-                  id="update_measurement"
                   type="number"
                   name="update_measurement"
                   onChange={handleUpdateChange}
                   value={formUpdateValues.update_measurement}
-                  sx={{ flex: 1 }}
+                  sx={{ width: '60%' }}
                 />
-              </Box>
+                {goal.measureable_type} so far
+              </Typography>
 
               {!areUpdateFormValuesEmpty() &&
                 <Button type="submit" variant="contained">Submit New Update</Button>
@@ -444,13 +444,10 @@ function Goal() {
             <CardActionArea sx={{ height: "100%" }}>
               <CardContent>
                 <Typography variant="h5" component="div">
-                  {update.update_date_epoch}
+                  By the milestone of {dayjs(update.update_date_epoch).format("dddd DD/MM/YY")} I managed to achieve {update.update_measurement} {goal.measureable_type}
                 </Typography>
                 <Typography variant="h5" component="div">
-                  {update.update_measurement}
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {update.update_text}
+                  I said that "{update.update_text}"
                 </Typography>
               </CardContent>
             </CardActionArea>
