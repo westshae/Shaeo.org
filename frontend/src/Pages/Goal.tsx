@@ -1,4 +1,4 @@
-import { Box, InputLabel, TextField, TextareaAutosize, Button, Card, CardActionArea, CardContent, Typography, Toolbar, Stack } from "@mui/material"
+import { Box, InputLabel, TextField, TextareaAutosize, Button, Card, CardActionArea, CardContent, Typography, Toolbar, Stack, Container } from "@mui/material"
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers"
 import { createClient, Session } from "@supabase/supabase-js"
 import { useState, useEffect } from "react"
@@ -24,8 +24,8 @@ function Goal() {
   const [updates, setUpdates] = useState<CreateUpdateInterface[]>([])
   const [goal, setGoal] = useState<CreateGoalInterface>({
     category_id: 0,
-    start_date_epoch: 0,
-    end_date_epoch: 0,
+    start_date_epoch: dayjs().toDate().getTime(),
+    end_date_epoch: dayjs().toDate().getTime(),
     outcome: '',
     measureable_type: '',
     measurement_count: 0,
@@ -38,10 +38,15 @@ function Goal() {
 
   const [formUpdateValues, setFormUpdateValues] = useState<CreateUpdateInterface>({
     goal_id: goal_id ? parseInt(goal_id) : undefined,
-    update_date_epoch: dayjs().unix(),
+    update_date_epoch: dayjs().toDate().getTime(),
     update_measurement: 0,
     update_text: '',
   });
+
+  const [firstPhaseStatus, setFirstPhaseStatus] = useState<number>(0);
+  const [secondPhaseStatus, setSecondPhaseStatus] = useState<number>(0);
+  const [thirdPhaseStatus, setThirdPhaseStatus] = useState<number>(0);
+  const [fourthPhaseStatus, setFourthPhaseStatus] = useState<number>(0);
 
   const navigate = useNavigate()
 
@@ -128,7 +133,7 @@ function Goal() {
       setAddProgress(false)
       setFormUpdateValues({
         goal_id: parseInt(goal_id!),
-        update_date_epoch: dayjs().unix(),
+        update_date_epoch: dayjs().toDate().getTime(),
         update_measurement: 0,
         update_text: '',
       });
@@ -157,8 +162,8 @@ function Goal() {
     setActionMode("create")
     setFormGoalValues({
       category_id: 0,
-      start_date_epoch: 0,
-      end_date_epoch: 0,
+      start_date_epoch: dayjs().toDate().getTime(),
+      end_date_epoch: dayjs().toDate().getTime(),
       outcome: '',
       measureable_type: '',
       measurement_count: 0,
@@ -167,10 +172,57 @@ function Goal() {
     })
   }
 
+  const handleFirstPhase = (event: any) => {
+    const input: string = event.target.value;
+    if (input.length > 200 && input.length < 8) {
+      setFirstPhaseStatus(1);
+    } else {
+
+      setFirstPhaseStatus(2);
+      // setTimeout(() => {
+      setSecondPhaseStatus(1)
+      // }, 7000);
+    }
+  }
+
+  const handleSecondPhase = (event: any) => {
+    const input: string = event.target.value;
+    if (input.length > 0) {
+      setSecondPhaseStatus(2);
+    }
+  }
+
+  const handleThirdPhase = (event: any) => {
+    if (event.target && event.target.value.length > 0) {
+      setThirdPhaseStatus(1)
+    } else {
+      const deadline = event;
+      const threeMonthsInTheFuture = dayjs().add(3, 'month');
+      const oneWeekInTheFuture = dayjs().add(1, 'week');
+      const currentTime = dayjs();
+      const isAfterTodayAndWithinThreeMonths = deadline.isBefore(threeMonthsInTheFuture) && deadline.isAfter(oneWeekInTheFuture);
+      if (isAfterTodayAndWithinThreeMonths) {
+        setFourthPhaseStatus(1)
+        setThirdPhaseStatus(3)
+      } else {
+        setThirdPhaseStatus(2)
+      }
+    }
+  }
+
+  const handleFourthPhase = (event: any) => {
+    if (event.target.value.length < 50 && event.target.value.length != 0) {
+      setFourthPhaseStatus(2)
+    } else if (event.target.value.length > 0) {
+      setFourthPhaseStatus(3)
+    }
+  }
+
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon/>ProjectQ1</Typography></Button>
+        <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />ProjectQ1</Typography></Button>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
           <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
           <Button onClick={async () => await supabase.auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
@@ -181,48 +233,139 @@ function Goal() {
         </Box>
       </Toolbar>
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <DatePicker
-          label="Goal End Date"
-          onChange={(value) => handleDateChange("end_date_epoch", value?.toDate())}
-          value={dayjs(formGoalValues.end_date_epoch)}
-        />
-        <TextareaAutosize
-          minRows={4}
-          placeholder="Outcome"
-          name="outcome"
-          value={formGoalValues.outcome}
-          onChange={handleGoalChange}
-          style={{ width: '100%', padding: '10px' }}
-        />
+        {actionMode != "update" && firstPhaseStatus == 0 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Well, since you're here, you must be wanting to set some half-decent goals.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>So, what outcome do you want to achieve?</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Make sure they're specific, like "I want to lose weight."</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Not "I want to be healthy"</Typography>
+          </Container>
+        }
 
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <TextField
-            type="number"
-            label="Measurement Count"
-            name="measurement_count"
+        <Typography variant="h5" sx={{ textTransform: 'none' }}>
+          I want to ...
+          <TextareaAutosize
+            placeholder="Outcome"
+            name="outcome"
+            value={formGoalValues.outcome}
             onChange={handleGoalChange}
-            value={formGoalValues.measurement_count}
-            sx={{ flex: 1 }}
+            onBlur={handleFirstPhase}
+            style={{ width: '70%', marginLeft: '0.5rem' }}
           />
-          <TextField
-            label="Measurable Type"
-            name="measureable_type"
-            onChange={handleGoalChange}
-            value={formGoalValues.measureable_type}
-            sx={{ flex: 1 }}
-          />
-        </Box>
+        </Typography>
+        {firstPhaseStatus == 1 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Based on the length of your message, your goal isn't specific enough.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Try make your outcome a short goal.</Typography>
+          </Container>
+        }
 
-        <TextareaAutosize
-          minRows={4}
-          placeholder="Achievable"
-          name="achievable"
-          onChange={handleGoalChange}
-          value={formGoalValues.achievable}
-          style={{ width: '100%', padding: '10px' }}
-        />
-        {hasFieldsUpdated &&
-          <Button type="submit" variant="contained" disabled={!hasFieldsUpdated}>Submit</Button>
+        {secondPhaseStatus == 1 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Time to make our outcome <b>M</b>easurable.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Great measurements are an amount of something you can do.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>"Kilograms lost", "Videos uploaded" or "3 Pointers in a row"</Typography>
+          </Container>
+        }
+        {(actionMode == "update" || secondPhaseStatus == 1 || secondPhaseStatus == 2) &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>My measurement is...
+              <TextField
+                name="measureable_type"
+                onChange={handleGoalChange}
+                value={formGoalValues.measureable_type}
+                onBlur={handleSecondPhase}
+                sx={{ flex: 1 }}
+              />
+            </Typography>
+
+          </Container>
+        }
+        {(actionMode == "update" || secondPhaseStatus == 2) &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>To be proud of the outcome, I will achieve
+              <TextField
+                type="number"
+                name="measurement_count"
+                onChange={handleGoalChange}
+                onBlur={handleThirdPhase}
+                value={formGoalValues.measurement_count}
+                sx={{ flex: 1 }}
+              />
+              {formGoalValues.measureable_type}
+            </Typography>
+          </Container>
+        }
+
+        {thirdPhaseStatus == 1 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>It's time for <b>T</b>ime (ha) and <b>A</b>chievability</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Goals are achieved, or failed, purely based on the deadline you set.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Losing 10kg in a day won't succeed, but losing it in a year likely will.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Or even better, losing 1kg this month.</Typography>
+          </Container>
+        }
+
+        {(actionMode == "update" || thirdPhaseStatus == 1 || thirdPhaseStatus == 2 || thirdPhaseStatus == 3) &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>My deadline will be...
+              <DatePicker
+                label="Goal End Date"
+                onChange={(value) => handleDateChange("end_date_epoch", value?.toDate())}
+                onAccept={handleThirdPhase}
+                value={dayjs(formGoalValues.end_date_epoch)}
+              />
+            </Typography>
+          </Container>
+        }
+
+        {thirdPhaseStatus == 2 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Deadlines should be within the range of 1 week, to 3 months away.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Try and shorten your deadline, 24kg in a year can be 2kg this month.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>You can always set the same goal next month too.</Typography>
+          </Container>
+        }
+
+        {fourthPhaseStatus == 1 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Time to make sure your goal is <b>A</b>chievable</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>How much leeway do you have? If you miss a day, will you fail your goal?</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Is success based on external factors, like a competition judge, or your genetics?</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Is your goal actually possible? Losing 10kg by tomorrow is an example of impossibility.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Write below why, assuming you aren't hit by a meteor tomorrow, you are guaranteed to succeed.</Typography>
+          </Container>
+        }
+        {(actionMode == "update" || fourthPhaseStatus == 1 || fourthPhaseStatus == 2 || fourthPhaseStatus == 3) &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+              I am guaranteed to succeed at this because...
+              <TextareaAutosize
+                placeholder="Achievable"
+                name="achievable"
+                value={formGoalValues.achievable}
+                onChange={handleGoalChange}
+                onBlur={handleFourthPhase}
+                style={{ width: '70%' }}
+              />
+            </Typography>
+          </Container>
+        }
+        {fourthPhaseStatus == 2 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+              I'm not sure your reasoning is detailed enough to guarantee success. Write as if you're giving yourself zero chance of failure.
+            </Typography>
+          </Container>
+
+        }
+        {hasFieldsUpdated && fourthPhaseStatus == 3 &&
+          <Container>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+              Congrats! You've set a goal that has a much higher chance of success!
+            </Typography>
+            <Button type="submit" variant="contained" disabled={!hasFieldsUpdated}>Save your goal</Button>
+          </Container>
         }
 
       </Box>
@@ -286,10 +429,7 @@ function Goal() {
             </CardActionArea>
           </Card>
         ))}
-
-
       </Stack>
-
     </LocalizationProvider>
   )
 }
