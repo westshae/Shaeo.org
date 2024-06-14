@@ -10,10 +10,7 @@ import { addUserGoal, addUserUpdates, getGoalUpdates, getUserGoal, updateUserGoa
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FlagIcon from '@mui/icons-material/Flag';
 import ResourceMenu from "../Components/ResourceMenu"
-
-
-const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
-
+import getAuth from "../Components/Authentication"
 
 function Goal() {
   const { action, goal_id } = useParams();
@@ -52,13 +49,13 @@ function Goal() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    getAuth().auth.getSession().then(({ data: { session } }) => {
       setSession(session)
     })
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = getAuth().auth.onAuthStateChange((_event, session) => {
       setSession(session)
 
       if (!session) {
@@ -244,7 +241,7 @@ function Goal() {
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
           <ResourceMenu />
           <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
-          <Button onClick={async () => await supabase.auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
+          <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
           {actionMode == "update" && hasFieldsUpdated &&
             <Button onClick={handleUpdateMode}><Typography variant="h6" sx={{ textTransform: 'none' }}>Reset Fields</Typography></Button>
 

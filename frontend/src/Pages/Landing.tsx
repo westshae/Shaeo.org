@@ -4,8 +4,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ResourceMenu from "../Components/ResourceMenu";
-const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
-
+import getAuth from "../Components/Authentication";
 
 function Landing() {
     const [session, setSession] = useState<Session | null>(null)
@@ -13,13 +12,13 @@ function Landing() {
 
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        getAuth().auth.getSession().then(({ data: { session } }) => {
             setSession(session)
         })
 
         const {
             data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
+        } = getAuth().auth.onAuthStateChange((_event, session) => {
             setSession(session)
         })
 
@@ -42,7 +41,7 @@ function Landing() {
                         <Button onClick={() => navigate("/login")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign in</Typography></Button>
                     }
                     {session &&
-                        <Button onClick={async () => await supabase.auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
+                        <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
                     }
                 </Box>
             </Toolbar>
