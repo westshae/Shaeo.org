@@ -123,11 +123,12 @@ export class GoalsService {
       .from('goals')
       .select()
       .eq("goal_id", update.goal_id)
+      .single()
 
     if (goal.data.update_ids == null) {
-      goal.data.update_ids = { id }
+      goal.data.update_ids = [ id ]
     } else {
-      goal.data.update_ids.push(id)
+      goal.data.update_ids = [...goal.data.update_ids, id];
     }
     await supabase
       .from('goals')
@@ -137,8 +138,6 @@ export class GoalsService {
         }
       )
       .eq("goal_id", update.goal_id)
-
-
   }
 
   async updateUserUpdate(session, update) {

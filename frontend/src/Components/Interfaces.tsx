@@ -7,7 +7,7 @@ interface GetGoalInterface {
     measurement_count: number;
     outcome: string;
     start_date_epoch: number;
-    update_ids: number | null;
+    update_ids: number[];
     user_uuid: string;
     title: string;
     description: string;

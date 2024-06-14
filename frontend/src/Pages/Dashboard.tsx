@@ -46,6 +46,7 @@ function Dashboard() {
         if (session && goals.length == 0) {
             getUserGoals(session).then((result) => {
                 setGoals(result.data.data)
+                console.log(result.data.data)
             });
         }
     }, [session])
@@ -73,9 +74,9 @@ function Dashboard() {
                         </CardActionArea>
                     </Card>
                 </Grid>
-                {goals.map((card, index) => (
+                {goals.map((card:GetGoalInterface, index) => (
                     <Grid item xs={6} key={index}>
-                        <Card sx={{ maxWidth: 500, position: 'relative' }} >
+                        <Card sx={{ height: "100%", position: 'relative' }} >
                             <IconButton
                                 aria-label="delete"
                                 sx={{ position: 'absolute', top: 10, right: 10, color: 'white', zIndex: 2000, background: "red", borderRadius: "4px", '&:hover': { background: "maroon" } }}
@@ -86,16 +87,17 @@ function Dashboard() {
 
 
                             <CardActionArea onClick={() => navigate(`/dashboard/update/${card.goal_id}`)}>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={"https://ssl.gstatic.com/calendar/images/eventillustrations/v1/img_gym_1x.jpg"}
-                                    alt={`Image of ${card.title}`}
-                                />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
                                         {card.outcome} {card.goal_id}
                                     </Typography>
+                                    {/* <Typography  variant="h5" component="div">
+                                        {card.end_date_epoch}        {card.update_ids.length}
+                                    </Typography> */}
+                                    <Typography  variant="h5" component="div">
+                                        {/* {card.update_ids.values} */}
+                                    </Typography>
+
                                 </CardContent>
                             </CardActionArea>
 
