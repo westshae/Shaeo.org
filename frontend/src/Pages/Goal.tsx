@@ -284,7 +284,7 @@ function Goal() {
 
         {secondPhaseStatus == 1 &&
           <Container>
-            <Typography variant="h5" sx={{ textTransform: 'none' }}>Time to make our outcome <b>M</b>easurable.</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Time to make our outcome Measurable.</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Great measurements are an amount of something you can do.</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>"Kilograms lost", "Videos uploaded" or "3 Pointers in a row"</Typography>
           </Container>
@@ -325,7 +325,7 @@ function Goal() {
 
         {thirdPhaseStatus == 1 &&
           <Container>
-            <Typography variant="h5" sx={{ textTransform: 'none' }}>It's time for <b>T</b>ime (ha) and <b>A</b>chievability</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>It's time for Time (ha) and Achievability</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Goals are achieved, or failed, purely based on the deadline you set.</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Losing 10kg in a day won't succeed, but losing it in a year likely will.</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Or even better, losing 1kg this month.</Typography>
@@ -355,7 +355,7 @@ function Goal() {
 
         {fourthPhaseStatus == 1 &&
           <Container>
-            <Typography variant="h5" sx={{ textTransform: 'none' }}>Time to make sure your goal is <b>A</b>chievable</Typography>
+            <Typography variant="h5" sx={{ textTransform: 'none' }}>Time to make sure your goal is Achievable</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>How much leeway do you have? If you miss a day, will you fail your goal?</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Is success based on external factors, like a competition judge, or your genetics?</Typography>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Is your goal actually possible? Losing 10kg by tomorrow is an example of impossibility.</Typography>
