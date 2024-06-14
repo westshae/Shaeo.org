@@ -260,19 +260,21 @@ function Goal() {
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Not "I want to be healthy"</Typography>
           </Container>
         }
-
-        <Typography variant="h5" sx={{ textTransform: 'none' }}>
-          I want to ...
-          <TextareaAutosize
-            placeholder="Outcome"
-            name="outcome"
-            value={formGoalValues.outcome}
-            onChange={handleGoalChange}
-            onBlur={handleFirstPhase}
-            style={{ width: '70%', marginLeft: '0.5rem' }}
-          />
-          <Button>Confirm</Button>
-        </Typography>
+        <Container>
+          <Typography variant="h5" sx={{ textTransform: 'none' }}>
+            I want to ...
+            <TextField
+              placeholder="Outcome"
+              name="outcome"
+              value={formGoalValues.outcome}
+              onChange={handleGoalChange}
+              onBlur={handleFirstPhase}
+              style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}
+              variant="standard"
+            />
+            <Button>Confirm</Button>
+          </Typography>
+        </Container>
         {firstPhaseStatus == 1 &&
           <Container>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>Based on the length of your message, your goal isn't specific enough.</Typography>
@@ -295,7 +297,8 @@ function Goal() {
                 onChange={handleGoalChange}
                 value={formGoalValues.measureable_type}
                 onBlur={handleSecondPhase}
-                sx={{ flex: 1 }}
+                sx={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}
+                variant="standard"
               />
               <Button>Confirm</Button>
             </Typography>
@@ -311,7 +314,8 @@ function Goal() {
                 onChange={handleGoalChange}
                 onBlur={handleThirdPhase}
                 value={formGoalValues.measurement_count}
-                sx={{ flex: 1 }}
+                sx={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}
+                variant="standard"
               />
               {formGoalValues.measureable_type}
               <Button>Confirm</Button>
@@ -332,10 +336,10 @@ function Goal() {
           <Container>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>My deadline will be...
               <DatePicker
-                label="Goal End Date"
                 onChange={(value) => handleDateChange("end_date_epoch", value?.toDate())}
                 onAccept={handleThirdPhase}
                 value={dayjs(formGoalValues.end_date_epoch)}
+
               />
             </Typography>
           </Container>
@@ -362,13 +366,15 @@ function Goal() {
           <Container>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>
               I am guaranteed to succeed at this because...
-              <TextareaAutosize
+              <TextField
+                multiline
                 placeholder="Achievable"
                 name="achievable"
                 value={formGoalValues.achievable}
                 onChange={handleGoalChange}
                 onBlur={handleFourthPhase}
-                style={{ width: '70%' }}
+                style={{ width: '100%' }}
+                variant="standard"
               />
               <Button>Confirm</Button>
 
