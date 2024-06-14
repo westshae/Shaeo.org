@@ -35,10 +35,7 @@ export default function ResourceMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={() => window.open("/resources/outcomes")}>Goal Outcomes</MenuItem>
-        <MenuItem onClick={() => window.open("/resources/measurements")}>Goal Measuring</MenuItem>
-        <MenuItem onClick={() => window.open("/resources/deadlines")}>Goal Deadlines</MenuItem>
-        <MenuItem onClick={() => window.open("/resources/achievability")}>Goal Achievability</MenuItem>
+        <MenuItem onClick={() => window.open("/resources/goalsetting")}>Goal Setting</MenuItem>
       </Menu>
     </Box>
   );
