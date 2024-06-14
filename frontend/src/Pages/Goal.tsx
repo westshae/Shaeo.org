@@ -114,6 +114,23 @@ function Goal() {
     });
   };
 
+  const areGoalFormValuesEmpty = () => {
+    let isEmpty = false;
+    if(formGoalValues.achievable == '') isEmpty = true;
+    if(formGoalValues.outcome == '') isEmpty = true;
+    if(formGoalValues.measureable_type == '') isEmpty = true;
+    if(formGoalValues.measurement_count == 0) isEmpty = true;
+    return isEmpty;
+  }
+
+  const areUpdateFormValuesEmpty = () => {
+    let isEmpty = false;
+    if(formUpdateValues.update_measurement == 0) isEmpty = true;
+    if(formUpdateValues.update_text == '') isEmpty = true;
+    return isEmpty;
+  }
+
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (goal_id && actionMode == "update") {
@@ -359,7 +376,7 @@ function Goal() {
           </Container>
 
         }
-        {hasFieldsUpdated && fourthPhaseStatus == 3 &&
+        {!areGoalFormValuesEmpty() && hasFieldsUpdated && fourthPhaseStatus == 3 &&
           <Container>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>
               Congrats! You've set a goal that has a much higher chance of success!
@@ -407,7 +424,10 @@ function Goal() {
                 />
               </Box>
 
-              <Button type="submit" variant="contained">Submit New Update</Button>
+              {!areUpdateFormValuesEmpty() &&
+                <Button type="submit" variant="contained">Submit New Update</Button>
+              }
+
             </Box>
           </LocalizationProvider>
         }
