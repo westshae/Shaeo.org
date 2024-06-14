@@ -73,6 +73,12 @@ export class GoalsService {
   async deleteUserGoal(session, goal_id) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
     const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const goal = this.getUserGoal(session, goal_id);
+    const update_ids = (await goal).data.update_ids;
+    update_ids.forEach( (update_id) => {
+      this.deleteUserUpdate(session, update_id)
+    })
+
     const result = await supabase
       .from('goals')
       .delete()
