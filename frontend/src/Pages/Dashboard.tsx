@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlagIcon from '@mui/icons-material/Flag';
 import { GetGoalInterface } from "../Components/Interfaces";
+import dayjs from "dayjs";
 
 const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRldXZyeXllYnR2cHNiZGdoZHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NDc5ODAsImV4cCI6MjAzMzEyMzk4MH0.7R6tDYRLEkpBbLEZkPVq0_0_uDYNmfeCrYZ53I0ZwBU')
 
@@ -46,7 +47,6 @@ function Dashboard() {
         if (session && goals.length == 0) {
             getUserGoals(session).then((result) => {
                 setGoals(result.data.data)
-                console.log(result.data.data)
             });
         }
     }, [session])
@@ -89,13 +89,13 @@ function Dashboard() {
                             <CardActionArea onClick={() => navigate(`/dashboard/update/${card.goal_id}`)}>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
-                                        {card.outcome} {card.goal_id}
+                                        {card.outcome}
                                     </Typography>
-                                    {/* <Typography  variant="h5" component="div">
-                                        {card.end_date_epoch}        {card.update_ids.length}
-                                    </Typography> */}
-                                    <Typography  variant="h5" component="div">
-                                        {/* {card.update_ids.values} */}
+                                    <Typography  variant="h6" component="div">
+                                        Completed by: {dayjs(card.end_date_epoch).format('ddd DD/MM/YY')}
+                                    </Typography>
+                                    <Typography  variant="h6" component="div">
+                                        {card.update_ids.length} Progress Updates Since {dayjs(card.start_date_epoch).format('DD/MM/YY')}
                                     </Typography>
 
                                 </CardContent>
