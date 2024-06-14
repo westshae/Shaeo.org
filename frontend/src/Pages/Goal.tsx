@@ -116,17 +116,17 @@ function Goal() {
 
   const areGoalFormValuesEmpty = () => {
     let isEmpty = false;
-    if(formGoalValues.achievable == '') isEmpty = true;
-    if(formGoalValues.outcome == '') isEmpty = true;
-    if(formGoalValues.measureable_type == '') isEmpty = true;
-    if(formGoalValues.measurement_count == 0) isEmpty = true;
+    if (formGoalValues.achievable == '') isEmpty = true;
+    if (formGoalValues.outcome == '') isEmpty = true;
+    if (formGoalValues.measureable_type == '') isEmpty = true;
+    if (formGoalValues.measurement_count == 0) isEmpty = true;
     return isEmpty;
   }
 
   const areUpdateFormValuesEmpty = () => {
     let isEmpty = false;
-    if(formUpdateValues.update_measurement == 0) isEmpty = true;
-    if(formUpdateValues.update_text == '') isEmpty = true;
+    if (formUpdateValues.update_measurement == 0) isEmpty = true;
+    if (formUpdateValues.update_text == '') isEmpty = true;
     return isEmpty;
   }
 
@@ -269,6 +269,7 @@ function Goal() {
             onBlur={handleFirstPhase}
             style={{ width: '70%', marginLeft: '0.5rem' }}
           />
+          <Button>Confirm</Button>
         </Typography>
         {firstPhaseStatus == 1 &&
           <Container>
@@ -294,6 +295,7 @@ function Goal() {
                 onBlur={handleSecondPhase}
                 sx={{ flex: 1 }}
               />
+              <Button>Confirm</Button>
             </Typography>
 
           </Container>
@@ -310,6 +312,7 @@ function Goal() {
                 sx={{ flex: 1 }}
               />
               {formGoalValues.measureable_type}
+              <Button>Confirm</Button>
             </Typography>
           </Container>
         }
@@ -365,6 +368,8 @@ function Goal() {
                 onBlur={handleFourthPhase}
                 style={{ width: '70%' }}
               />
+              <Button>Confirm</Button>
+
             </Typography>
           </Container>
         }
