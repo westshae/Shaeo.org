@@ -2,7 +2,7 @@ import { Box, Button, Card, CardActionArea, CardContent, Container, Grid, IconBu
 import { Session } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserGoals, deleteUserGoal } from "../Components/Api";
+import { getUserGoals, deleteUserGoal, getIsUserPremium } from "../Components/Api";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -14,6 +14,8 @@ import getAuth from "../Components/Authentication";
 function Dashboard() {
     const [session, setSession] = useState<Session | null>(null)
     const [goals, setGoals] = useState<GetGoalInterface[]>([]);
+    const [isUserPremium, setIsUserPremium] = useState<boolean>(false);
+
     const navigate = useNavigate()
 
     const handleDelete = async (goalId: number) => {
@@ -46,6 +48,10 @@ function Dashboard() {
         if (session && goals.length == 0) {
             getUserGoals(session).then((result) => {
                 setGoals(result.data.data)
+                getIsUserPremium(session).then((result) => {
+                    setIsUserPremium(result.data)
+                })
+
             });
         }
     }, [session])
@@ -64,18 +70,31 @@ function Dashboard() {
 
             </Toolbar>
             <Grid container spacing={2} >
-                <Grid item xs={6}>
-                    <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
-                        <CardActionArea sx={{ height: "100%" }}>
+                {session && goals.length >= 1 && !isUserPremium &&
+                    <Grid item xs={6}>
+                        <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
                             <CardContent>
-                                <AddCircleOutlineIcon color="primary" style={{ fontSize: 60, height: "100%" }} />
                                 <Typography color="primary" variant="h5" component="div">
-                                    Create new goal
+                                    Upgrade your account to have more than one concurrent goal
                                 </Typography>
                             </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
+                        </Card>
+                    </Grid>
+                }
+                {session && (isUserPremium || goals.length < 1) &&
+                    <Grid item xs={6}>
+                        <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
+                            <CardActionArea sx={{ height: "100%" }}>
+                                <CardContent>
+                                    <AddCircleOutlineIcon color="primary" style={{ fontSize: 60, height: "100%" }} />
+                                    <Typography color="primary" variant="h5" component="div">
+                                        Create new goal
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                }
                 {goals.map((card: GetGoalInterface, index) => (
                     <Grid item xs={6} key={index}>
                         <Card sx={{ height: "100%", position: 'relative' }} >

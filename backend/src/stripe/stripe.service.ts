@@ -40,6 +40,7 @@ export class StripeService {
                 ],
                 metadata: {
                     user_uuid: session.user.id,
+                    product_id: "goal_annual"
                 },
 
             });
@@ -49,6 +50,37 @@ export class StripeService {
             console.error('Error creating Stripe payment link:', error);
             throw new InternalServerErrorException('Failed to create Stripe payment link');
         }
+    }
+
+    async addUserToPayments(metadata) {
+        const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
+        const currentDate = new Date();
+        const futureDate = new Date(currentDate);
+        futureDate.setFullYear(currentDate.getFullYear() + 1);
+        const futureEpoch = futureDate.getTime();
+
+        const result = await supabase
+            .from('payments')
+            .insert(
+                {
+                    user_uuid: metadata.user_uuid,
+                    expiration_epoch: futureEpoch
+                }
+            )
+
+    }
+
+    async isUserPremium(session) {
+        if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
+        const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
+    
+        const goal = await supabase.from("payments").select("*").eq("user_uuid", session.user.id).single();
+        if(goal.status != 200){
+            return false;
+        }
+        const expirationEpoch = goal.data.expiration_epoch;
+        const currentDate = new Date().getTime();
+        return !(currentDate > expirationEpoch)
     }
 
 }

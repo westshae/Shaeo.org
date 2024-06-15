@@ -28,16 +28,24 @@ export class GoalsService {
     const goal = supabase.from("goals").select("*").eq("goal_id", goal_id).eq("user_uuid", session.user.id).single();
     return goal;
   }
+  
 
-
-  async addUserGoal(session, goal) {
+  async addUserGoal(session, goal, isUserPremium) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
     const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
+    
+    const goalCount =(await this.getUserGoals(session)).data.length;
+    if(!isUserPremium && goalCount> 1){
+      return;
+    }
+    const timestamp = new Date().getTime();
+    const uniqueId = (timestamp * 1000) + (Math.floor(Math.random() * 100000000));
+
     const result = await supabase
       .from('goals')
       .insert(
         {
-          goal_id: Math.floor(Math.random() * 1000),
+          goal_id: uniqueId,
           user_uuid: session.user.id,
           category_id: goal.category_id,
           start_date_epoch: goal.start_date_epoch,
@@ -110,12 +118,14 @@ export class GoalsService {
   async addUserUpdate(session, update) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
     const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
-    let id = Math.floor(Math.random() * 1000);
+    const timestamp = new Date().getTime();
+    const uniqueId = (timestamp * 1000) + (Math.floor(Math.random() * 100000000));
+
     const result = await supabase
       .from('updates')
       .insert(
         {
-          update_id: id,
+          update_id: uniqueId,
           user_uuid: session.user.id,
           goal_id: update.goal_id,
           update_date_epoch: update.update_date_epoch,
@@ -132,9 +142,9 @@ export class GoalsService {
       .single()
 
     if (goal.data.update_ids == null) {
-      goal.data.update_ids = [ id ]
+      goal.data.update_ids = [ uniqueId ]
     } else {
-      goal.data.update_ids = [...goal.data.update_ids, id];
+      goal.data.update_ids = [...goal.data.update_ids, uniqueId];
     }
     await supabase
       .from('goals')

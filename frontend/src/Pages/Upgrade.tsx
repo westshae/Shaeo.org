@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import FlagIcon from '@mui/icons-material/Flag';
 import ResourceMenu from "../Components/ResourceMenu";
 import getAuth from "../Components/Authentication";
-import { getPaymentLink } from "../Components/Api";
+import { getPaymentLink, getIsUserPremium } from "../Components/Api";
 
 function Upgrade() {
     const [session, setSession] = useState<Session | null>(null)
     const [paymentLink, setPaymentLink] = useState<string | null>(null);
+    const [isUserPremium, setIsUserPremium] = useState<boolean>(false);
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -36,6 +38,9 @@ function Upgrade() {
         if (session) {
             getPaymentLink(session).then((result) => {
                 setPaymentLink(result.data)
+                getIsUserPremium(session).then((result) => {
+                    setIsUserPremium(result.data)
+                })
             });
         }
     }, [session])
@@ -119,7 +124,7 @@ function Upgrade() {
                             </Typography>
                             {' '}progress updates on your goal
                         </Typography>
-                        {paymentLink != null &&
+                        {paymentLink != null && !isUserPremium &&
                             <Button variant="contained" onClick={() => window.open(paymentLink)} sx={{ marginLeft: '0.5rem' }}>
                                 <Typography variant="h5" color="#121212" sx={{ textTransform: 'none' }}>Buy Annual Access Here</Typography>
                             </Button>
@@ -128,6 +133,10 @@ function Upgrade() {
                 </Card>
             </Box>
             <br />
+            {isUserPremium &&
+                <Typography variant="h5" color="primary" sx={{ textTransform: 'none' }}>Thank you for purchasing premium</Typography>
+            }
+
 
 
         </Container>

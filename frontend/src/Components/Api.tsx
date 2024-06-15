@@ -112,4 +112,9 @@ const getPaymentLink = async (session: any) => {
     return result;
 }
 
-export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate, getGoalUpdates, getPaymentLink}
+const getIsUserPremium = async (session: any) => {
+    const result = await axios.get("http://localhost:5000/stripe/isUserPremium",{params:{session}})
+    return result
+}
+
+export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate, getGoalUpdates, getPaymentLink, getIsUserPremium}

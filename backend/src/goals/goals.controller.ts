@@ -2,10 +2,11 @@ import { Body, Controller, Delete, Get, Post, Query } from "@nestjs/common";
 import { GoalsService } from "./goals.service";
 import { createClient } from '@supabase/supabase-js'
 import { query } from "express";
+import { StripeService } from "src/stripe/stripe.service";
 
 @Controller("goals")
 export class GoalsController {
-  constructor(private readonly goalsService: GoalsService) {}
+  constructor(private readonly goalsService: GoalsService, private readonly stripeService: StripeService) {}
 
   @Get("getUserGoals")
   async getUserGoals(@Query() query) {
@@ -21,7 +22,8 @@ export class GoalsController {
 
   @Post("addUserGoal")
   async addUserGoal(@Body() body){
-    const result = await this.goalsService.addUserGoal(body.session, body.goal)
+    const isUserPremium = await this.stripeService.isUserPremium(body.session);
+    const result = await this.goalsService.addUserGoal(body.session, body.goal, isUserPremium)
     return result;
   }
 
