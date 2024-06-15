@@ -51,8 +51,8 @@ function Landing() {
             <Container>
                 <Box>
                     <Typography variant="h2" sx={{ textTransform: 'none', textAlign: 'center' }}>Helping set goals you'll
-                        <Typography variant="h2" color="primary" sx={{ textTransform: 'none', textAlign: 'center' }}>
-                            actually achieve
+                        <Typography component="span"variant="h2" color="primary" sx={{ textTransform: 'none', textAlign: 'center' }}>
+                            {' '}actually achieve
                         </Typography>
                     </Typography>
                 </Box>

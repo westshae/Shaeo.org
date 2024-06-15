@@ -2,17 +2,17 @@ import axios from "axios"
 import { CreateGoalInterface, CreateUpdateInterface } from "./Interfaces"
 
 const getUserGoals = async (session: any) =>{
-    const result = await axios.get("http://localhost:5000/goals/getUserGoals",{params:{session}})
+    const result = await axios.get(process.env.REACT_APP_BACKEND_URL + "/goals/getUserGoals",{params:{session}})
     return result
 }
 
 const getUserGoal = async (session: any, goal_id: number) => {
-    const result = await axios.get("http://localhost:5000/goals/getUserGoal",{params:{session: session, goal_id: goal_id}})
+    const result = await axios.get(process.env.REACT_APP_BACKEND_URL + "/goals/getUserGoal",{params:{session: session, goal_id: goal_id}})
     return result
 }
 
 const addUserGoal = async (session: any, goal: CreateGoalInterface) =>{
-    const result = await axios.post("http://localhost:5000/goals/addUserGoal",{
+    const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/goals/addUserGoal",{
         session:session,
         goal: {
             category_id: goal.category_id,
@@ -29,7 +29,7 @@ const addUserGoal = async (session: any, goal: CreateGoalInterface) =>{
 }
 
 const updateUserGoal = async (session: any, goal_id:number, goal: CreateGoalInterface) => {
-    const result = await axios.post("http://localhost:5000/goals/updateUserGoal",{
+    const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/goals/updateUserGoal",{
         session:session,
         goal: {
             goal_id: goal_id,
@@ -48,7 +48,7 @@ const updateUserGoal = async (session: any, goal_id:number, goal: CreateGoalInte
 }
 
 const deleteUserGoal = async (session: any, goalId: number) => {
-    const result = await axios.delete("http://localhost:5000/goals/deleteUserGoal",{
+    const result = await axios.delete(process.env.REACT_APP_BACKEND_URL + "/goals/deleteUserGoal",{
         data: {
             session:session,
             goal_id: goalId
@@ -58,17 +58,17 @@ const deleteUserGoal = async (session: any, goalId: number) => {
 }
 
 const getUserUpdates = async (session: any) => {
-    const result = await axios.get("http://localhost:5000/goals/getUserUpdates",{params:{session}})
+    const result = await axios.get(process.env.REACT_APP_BACKEND_URL + "/goals/getUserUpdates",{params:{session}})
     return result
 }
 
 const getGoalUpdates = async (session: any, goal_id: number) => {
-    const result = await axios.get("http://localhost:5000/goals/getGoalUpdates",{params:{session, goal_id}})
+    const result = await axios.get(process.env.REACT_APP_BACKEND_URL + "/goals/getGoalUpdates",{params:{session, goal_id}})
     return result
 }
 
 const addUserUpdates = async (session: any, formValues: CreateUpdateInterface) => {
-    const result = await axios.post("http://localhost:5000/goals/addUserUpdate",{
+    const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/goals/addUserUpdate",{
         session:session,
         update: {
             goal_id: formValues.goal_id,
@@ -83,7 +83,7 @@ const addUserUpdates = async (session: any, formValues: CreateUpdateInterface) =
 }
 
 const updateUserUpdate = async (session: any) => {
-    const result = await axios.post("http://localhost:5000/goals/updateUserUpdate",{
+    const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/goals/updateUserUpdate",{
         session:session,
         update: {
             update_id: 457,
@@ -96,7 +96,7 @@ const updateUserUpdate = async (session: any) => {
 }
 
 const deleteUserUpdate = async (session: any) => {
-    const result = await axios.delete("http://localhost:5000/goals/deleteUserUpdate",{
+    const result = await axios.delete(process.env.REACT_APP_BACKEND_URL + "/goals/deleteUserUpdate",{
         data: {
             session:session,
             update_id: 457
@@ -106,14 +106,14 @@ const deleteUserUpdate = async (session: any) => {
 }
 
 const getPaymentLink = async (session: any) => {
-    const result = await axios.post("http://localhost:5000/stripe/getPaymentLink",{
+    const result = await axios.post(process.env.REACT_APP_BACKEND_URL + "/stripe/getPaymentLink",{
         session:session,
     })
     return result;
 }
 
 const getIsUserPremium = async (session: any) => {
-    const result = await axios.get("http://localhost:5000/stripe/isUserPremium",{params:{session}})
+    const result = await axios.get(process.env.REACT_APP_BACKEND_URL + "/stripe/isUserPremium",{params:{session}})
     return result
 }
 
