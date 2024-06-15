@@ -411,13 +411,16 @@ function Goal() {
             <Box component="form" onSubmit={handleUpdateSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Typography variant="h5" sx={{ textTransform: 'none' }}>
                 My progress is...
-                <TextareaAutosize
+                <TextField
+                multiline
                   placeholder="Progress Notes"
                   name="update_text"
-                  value={formUpdateValues.update_text}
                   onChange={handleUpdateChange}
-                  style={{ width: '60%' }}
+                  value={formUpdateValues.update_text}
+                  sx={{ paddingLeft: '0.5rem', paddingRight: '0.5rem', width: '70%' }}
+                  variant="standard"
                 />
+
               </Typography>
               <Typography variant="h5" sx={{ textTransform: 'none' }}>
                 I've managed to complete
@@ -426,7 +429,8 @@ function Goal() {
                   name="update_measurement"
                   onChange={handleUpdateChange}
                   value={formUpdateValues.update_measurement}
-                  sx={{ width: '60%' }}
+                  sx={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}
+                  variant="standard"
                 />
                 {goal.measureable_type} so far
               </Typography>
