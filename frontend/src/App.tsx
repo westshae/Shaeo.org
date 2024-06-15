@@ -7,6 +7,7 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from './Components/Theme';
 import { Box, CssBaseline } from '@mui/material';
 import GoalSetting from './Pages/Resources/GoalSetting';
+import Upgrade from './Pages/Upgrade';
 function App() {
   document.title = "WLR Coffee"
   return (
@@ -21,7 +22,7 @@ function App() {
             <Route path="/dashboard/:action/:goal_id" element={<Goal />} />
             <Route path="/dashboard/:action" element={<Goal />} />
             <Route path="/resources/goalsetting" element={<GoalSetting />} />
-
+            <Route path="/upgrade" element={<Upgrade/>}/>
           </Routes>
         </Router>
       </Box>

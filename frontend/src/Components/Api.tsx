@@ -105,4 +105,11 @@ const deleteUserUpdate = async (session: any) => {
     return result
 }
 
-export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate, getGoalUpdates}
+const getPaymentLink = async (session: any) => {
+    const result = await axios.post("http://localhost:5000/stripe/getPaymentLink",{
+        session:session,
+    })
+    return result;
+}
+
+export {getUserGoals, getUserGoal, getUserUpdates, addUserGoal, addUserUpdates, updateUserGoal, updateUserUpdate, deleteUserGoal, deleteUserUpdate, getGoalUpdates, getPaymentLink}

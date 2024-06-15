@@ -1,5 +1,5 @@
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Container, Grid, IconButton, Toolbar, Typography } from "@mui/material";
-import { Session, createClient } from "@supabase/supabase-js";
+import { Box, Button, Card, CardActionArea, CardContent, Container, Grid, IconButton, Toolbar, Typography } from "@mui/material";
+import { Session } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserGoals, deleteUserGoal } from "../Components/Api";
@@ -56,6 +56,9 @@ function Dashboard() {
                 <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />ProjectQ1</Typography></Button>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
                     <ResourceMenu />
+                    {session &&
+                        <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
+                    }
                     <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
                 </Box>
 

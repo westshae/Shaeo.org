@@ -35,6 +35,9 @@ function GoalSetting() {
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
                     <ResourceMenu/>
                     {session &&
+                        <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
+                    }
+                    {session &&
                         <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
                     }
                     {!session &&

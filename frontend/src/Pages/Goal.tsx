@@ -236,6 +236,9 @@ function Goal() {
         <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />ProjectQ1</Typography></Button>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
           <ResourceMenu />
+          {session &&
+            <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
+          }
           <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
           <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
           {actionMode == "update" && hasFieldsUpdated &&
@@ -329,7 +332,7 @@ function Goal() {
           <Container>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>My deadline will be...
               <DatePicker
-              sx={{padding: 'none'}}
+                sx={{ padding: 'none' }}
                 onChange={(value) => handleDateChange("end_date_epoch", value?.toDate())}
                 onAccept={handleThirdPhase}
                 value={dayjs(formGoalValues.end_date_epoch)}
@@ -412,7 +415,7 @@ function Goal() {
               <Typography variant="h5" sx={{ textTransform: 'none' }}>
                 My progress is...
                 <TextField
-                multiline
+                  multiline
                   placeholder="Progress Notes"
                   name="update_text"
                   onChange={handleUpdateChange}
