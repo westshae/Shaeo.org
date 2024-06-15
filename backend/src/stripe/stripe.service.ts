@@ -6,7 +6,7 @@ import Stripe from "stripe";
 export class StripeService {
     private stripe: Stripe;
     constructor() {
-        this.stripe = new Stripe(process.env.STRIPE_TEST_KEY)
+        this.stripe = new Stripe(process.env.STRIPE_KEY)
     }
 
     async authenticateUser(session) {
