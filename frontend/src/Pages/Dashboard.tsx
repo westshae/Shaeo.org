@@ -59,7 +59,7 @@ function Dashboard() {
     return (
         <Container>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />ProjectQ1</Typography></Button>
+                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
                     <ResourceMenu />
                     {session &&
