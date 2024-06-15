@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 @Injectable()
 export class GoalsService {
   async authenticateUser(session) {
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const user = await supabase.auth.getUser(session.access_token);
     if (user.data.user.id === session.user.id) {
       return true
@@ -14,7 +14,7 @@ export class GoalsService {
 
   async getUserGoals(session) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
 
     const goals = supabase.from("goals").select("*").eq("user_uuid", session.user.id);
     
@@ -23,7 +23,7 @@ export class GoalsService {
   
   async getUserGoal(session, goal_id) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
 
     const goal = supabase.from("goals").select("*").eq("goal_id", goal_id).eq("user_uuid", session.user.id).single();
     return goal;
@@ -32,7 +32,7 @@ export class GoalsService {
 
   async addUserGoal(session, goal) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const result = await supabase
       .from('goals')
       .insert(
@@ -54,7 +54,7 @@ export class GoalsService {
 
   async updateUserGoal(session, goal) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const result = await supabase
       .from('goals')
       .update({
@@ -72,7 +72,7 @@ export class GoalsService {
 
   async deleteUserGoal(session, goal_id) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const goal = this.getUserGoal(session, goal_id);
     const update_ids = (await goal).data.update_ids;
     update_ids.forEach( (update_id) => {
@@ -88,7 +88,7 @@ export class GoalsService {
 
   async getUserUpdates(session) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const result = await supabase
       .from('updates')
       .select()
@@ -98,7 +98,7 @@ export class GoalsService {
 
   async getGoalUpdates(session, goal_id) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const result = await supabase
       .from('updates')
       .select()
@@ -109,7 +109,7 @@ export class GoalsService {
 
   async addUserUpdate(session, update) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     let id = Math.floor(Math.random() * 1000);
     const result = await supabase
       .from('updates')
@@ -148,7 +148,7 @@ export class GoalsService {
 
   async updateUserUpdate(session, update) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const result = await supabase
       .from('updates')
       .update({
@@ -161,7 +161,7 @@ export class GoalsService {
 
   async deleteUserUpdate(session, update_id) {
     if (!this.authenticateUser(session)) throw new UnauthorizedException("Authentication Failed");
-    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_ANON_API_KEY);
+    const supabase = createClient('https://teuvryyebtvpsbdghdxa.supabase.co', process.env.SUPABASE_PRIV_API_KEY);
     const result = await supabase
       .from('updates')
       .delete()
