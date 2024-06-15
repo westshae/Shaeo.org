@@ -1,4 +1,4 @@
-import { Box, Button, Toolbar, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, Container, Grid, Toolbar, Typography } from "@mui/material";
 import { Session, createClient } from "@supabase/supabase-js";
 import FlagIcon from '@mui/icons-material/Flag';
 import { useState, useEffect } from "react";
@@ -45,6 +45,103 @@ function Landing() {
                     }
                 </Box>
             </Toolbar>
+            <Container>
+                <Box>
+                    <Typography variant="h2" sx={{ textTransform: 'none', textAlign: 'center' }}>Helping set goals you'll actually achieve</Typography>
+                </Box>
+                <br />
+                <Box
+                    display="flex"
+                    flexDirection={"column"}
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Card sx={{ width: "50%", textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }}>
+                        <CardContent>
+                            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                                No More...
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                Unspecific Goals
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                Bad Metrics
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                Impssible to achieve goals
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                Deadlines that make it harder to succeed
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    <br />
+
+                    <Typography variant="h5">Goals achieved in weeks, not never.</Typography>
+                </Box>
+                <br />
+                <Box>
+                    <Card sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', height: "100%" }}>
+                        <CardContent sx={{ width: "50%" }}>
+                            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                                Who am I?
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                I've been working on self-improvement for the past 5 years, more recently focusing on giving advice to people based on what
+                                I've learnt.
+                            </Typography>
+                        </CardContent>
+                        <CardContent sx={{ width: "50%" }}>
+                            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                                What people fail on?
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                Goals always seem to lack specificity, solid metrics, a good timeline, and a guaranteed achievement.
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Box>
+                <br/>
+                <Box>
+                    <Card sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', height: "100%" }}>
+                        <CardContent sx={{ width: "50%" }}>
+                            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                                Free Tier
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                - Access to 1 concurrent goal
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                - Unlimited access to resources
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                - Unlimited progress updates on your goal
+                            </Typography>
+                        </CardContent>
+                        <CardContent sx={{ width: "50%" }}>
+                            <Typography variant="h5" sx={{ textTransform: 'none' }}>
+                                $30 Annual Access
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                - Access to unlimited concurrent goal
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                - Unlimited access to resources
+                            </Typography>
+                            <Typography variant="h6" sx={{ textTransform: 'none' }}>
+                                - Unlimited progress updates on your goal
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Box>
+                <br/>
+                <Box sx={{display: 'flex'}}>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }}>If you're interested...</Typography>
+                    <Button variant="contained" onClick={() => navigate("/dashboard")} sx={{ marginLeft: '0.5rem' }}>
+                        <Typography variant="h5" sx={{ textTransform: 'none' }}>Get Started Free</Typography>
+                    </Button>
+                </Box>
+            </Container>
         </Box>
     )
 }
