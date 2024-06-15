@@ -28,7 +28,12 @@ function Login() {
     return () => subscription.unsubscribe()
   }, [])
 
-  return (<Auth supabaseClient={getAuth()} appearance={{ theme: ThemeSupa }} />)
+  return (<Auth
+    supabaseClient={getAuth()}
+    appearance={{ theme: ThemeSupa }}
+    providers={[]}
+    theme="dark"
+  />)
 
 
 }

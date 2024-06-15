@@ -192,11 +192,7 @@ function Goal() {
     if (input.length > 200 && input.length < 8) {
       setFirstPhaseStatus(1);
     } else {
-
-      setFirstPhaseStatus(2);
-      // setTimeout(() => {
       setSecondPhaseStatus(1)
-      // }, 7000);
     }
   }
 
@@ -333,6 +329,7 @@ function Goal() {
           <Container>
             <Typography variant="h5" sx={{ textTransform: 'none' }}>My deadline will be...
               <DatePicker
+              sx={{padding: 'none'}}
                 onChange={(value) => handleDateChange("end_date_epoch", value?.toDate())}
                 onAccept={handleThirdPhase}
                 value={dayjs(formGoalValues.end_date_epoch)}
@@ -401,7 +398,7 @@ function Goal() {
           <Card sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => setAddProgress(!addProgress)}>
             <CardActionArea sx={{ height: "100%" }}>
               <CardContent>
-                <AddCircleOutlineIcon style={{ fontSize: 60, color: 'gray', height: "100%" }} />
+                <AddCircleOutlineIcon color="primary" style={{ fontSize: 60, height: "100%" }} />
                 <Typography variant="h5" component="div">
                   Add New Progress
                 </Typography>
@@ -413,7 +410,7 @@ function Goal() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box component="form" onSubmit={handleUpdateSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Typography variant="h5" sx={{ textTransform: 'none' }}>
-                So far, my progress is...
+                My progress is...
                 <TextareaAutosize
                   placeholder="Progress Notes"
                   name="update_text"
@@ -444,16 +441,21 @@ function Goal() {
 
         {updates && updates.map((update) => (
           <Card key={update.update_date_epoch} sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }}>
-            <CardActionArea sx={{ height: "100%" }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  By the milestone of {dayjs(update.update_date_epoch).format("dddd DD/MM/YY")} I managed to achieve {update.update_measurement} {goal.measureable_type}
+            <CardContent>
+              <Typography variant="h5" component="div" >
+                On {' '}
+                <Typography variant="h5" component="span" color="primary">
+                  {dayjs(update.update_date_epoch).format("dddd DD/MM/YY")}
                 </Typography>
-                <Typography variant="h5" component="div">
-                  I said that "{update.update_text}"
+                {' '}I managed to achieve{' '}
+                <Typography variant="h5" component="span" color="primary">
+                  {update.update_measurement} {goal.measureable_type}
                 </Typography>
-              </CardContent>
-            </CardActionArea>
+              </Typography>
+              <Typography variant="h5" component="div">
+                Notes: "{update.update_text}"
+              </Typography>
+            </CardContent>
           </Card>
         ))}
       </Stack>

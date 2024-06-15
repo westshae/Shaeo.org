@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserGoals, deleteUserGoal } from "../Components/Api";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 import { GetGoalInterface } from "../Components/Interfaces";
 import dayjs from "dayjs";
@@ -65,8 +65,8 @@ function Dashboard() {
                     <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
                         <CardActionArea sx={{ height: "100%" }}>
                             <CardContent>
-                                <AddCircleOutlineIcon style={{ fontSize: 60, color: 'gray', height: "100%" }} />
-                                <Typography variant="h5" component="div">
+                                <AddCircleOutlineIcon color="primary" style={{ fontSize: 60, height: "100%" }} />
+                                <Typography color="primary" variant="h5" component="div">
                                     Create new goal
                                 </Typography>
                             </CardContent>
@@ -78,8 +78,9 @@ function Dashboard() {
                         <Card sx={{ height: "100%", position: 'relative' }} >
                             <IconButton
                                 aria-label="delete"
-                                sx={{ position: 'absolute', top: 10, right: 10, color: 'white', zIndex: 2000, background: "red", borderRadius: "4px", '&:hover': { background: "maroon" } }}
+                                sx={{ position: 'absolute', top: 10, right: 10, color: 'white', zIndex: 2000, background: "#FF7043", borderRadius: "4px", '&:hover': { background: "maroon" } }}
                                 onClick={() => handleDelete(card.goal_id)}
+                                color="primary"
                             >
                                 <DeleteIcon />
                             </IconButton>
@@ -87,16 +88,18 @@ function Dashboard() {
 
                             <CardActionArea onClick={() => navigate(`/dashboard/update/${card.goal_id}`)}>
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
+                                    <Typography color="primary" gutterBottom variant="h5" component="div">
                                         {card.outcome}
                                     </Typography>
                                     <Typography variant="h6" component="div">
-                                        Completed by: {dayjs(card.end_date_epoch).format('ddd DD/MM/YY')}
+                                        Complete by: {dayjs(card.end_date_epoch).format('ddd DD/MM/YY')}
                                     </Typography>
                                     <Typography variant="h6" component="div">
-                                        {card.update_ids.length} Progress Updates Since {dayjs(card.start_date_epoch).format('DD/MM/YY')}
+                                        Most Recent Update:  {dayjs(card.start_date_epoch).format('DD/MM/YY')}
                                     </Typography>
-
+                                    <Typography variant="h6" component="div">
+                                        {card.update_ids.length} Progress Updates
+                                    </Typography>
                                 </CardContent>
                             </CardActionArea>
 

@@ -1,13 +1,19 @@
-import { deepOrange } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
-      main: '#1976d2',
+      main: '#FF7043',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#cfcfcf',
     },
+    text: {
+      primary: '#cfcfcf',
+      secondary: 'FF7043'
+    },
+
   },
+
 });

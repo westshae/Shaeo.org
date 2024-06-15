@@ -47,14 +47,15 @@ function GoalSetting() {
             </Toolbar>
             <Container>
                 <Box>
-                    <Typography variant="h4" sx={{ textTransform: 'none' }}>Goal Setting: Making achievable goals.</Typography>
+                    <Typography variant="h4" sx={{ textTransform: 'none' }} color="primary">Goal Setting: Making achievable goals.</Typography>
                     <br/>
-                    <Typography variant="h5" sx={{ textTransform: 'none' }}>Introduction</Typography>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }} color="primary">Introduction</Typography>
                     <Typography variant="body1" sx={{ textTransform: 'none' }}>
                         There are so many ways to set goals that can't be achieved, and set you back more than they help you. S.M.A.R.T goals are a great start,
                         but honestly, I think the R is a waste, and the rest generally aren't explained well, so I'll explain them here.
                     </Typography>
-                    <Typography variant="h5" sx={{ textTransform: 'none' }}>Being Specific</Typography>
+                    <br/>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }} color="primary">Being Specific</Typography>
                     <Typography variant="body1" sx={{ textTransform: 'none' }}>
                         When it comes to setting goals, one of the first steps people fail at is being specific.
                         Lets use the prime example of "Getting Healthier". If someone tells you that "They want to get healthier",
@@ -76,7 +77,8 @@ function GoalSetting() {
                         Who knows. All I know is, the only goals that work are ones that you have a well defined success criteria. Set multiple goals if you have to.
                         Tell me "I want to lose weight", "I want to be able to run longer", "I want to eat less food", not "I want to be healthier"
                     </Typography>
-                    <Typography variant="h5" sx={{ textTransform: 'none' }}>Measuring The Right Metrics</Typography>
+                    <br/>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }} color="primary">Measuring The Right Metrics</Typography>
                     <Typography variant="body1" sx={{ textTransform: 'none' }}>
                         Right, so we've set a specific goal, but now we need to figure out what metrics to follow. Using "losing weight" as the example again,
                         we already know that the "metric" of losing weight is either pounds, or kilograms, but that doesn't actually help us achieve our goals 
@@ -93,7 +95,8 @@ function GoalSetting() {
                         Instead, if you work on working out more, and eating less, then after a month or so of having the habit, you can increase the amount of running you hope
                         to achieve, or decrease the amount of food you want to eat, or even set a restriction on the type of food you want to eat.
                     </Typography>
-                    <Typography variant="h5" sx={{ textTransform: 'none' }}>Goals Need To Be Achievable</Typography>
+                    <br/>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }} color="primary">Goals Need To Be Achievable</Typography>
                     <Typography variant="body1" sx={{ textTransform: 'none' }}>
                         We discussed achievability briefly when it comes to setting metrics, but we also need to set goals that are guaranteed to be achievable no matter
                         what happens. Lets say you play college basketball, and you want to improve. 
@@ -116,7 +119,8 @@ function GoalSetting() {
                         To give you an understanding of goals like this, as they can be hard to spot, avoid goals like this. "I want to start a business that makes $1million per year",
                         "I want to get 1000 new clients this year", "I want to be the first person at work everyday", "I want to become friends with Joe Blog".
                     </Typography>
-                    <Typography variant="h5" sx={{ textTransform: 'none' }}>The Time of Deadlines</Typography>
+                    <br/>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }} color="primary">The Time of Deadlines</Typography>
                     <Typography variant="body1" sx={{ textTransform: 'none' }}>
                         It's time that we get to time (ha). Assuming all other aspects of your goals are right, time can be the factor that ensures you succeed, or rather fail.
                         Why?
@@ -160,7 +164,8 @@ function GoalSetting() {
                         Remember, you don't have to wait 9 weeks to achieve your goal, you need to complete the goal by then. That means, if you're feeling extra motivated one 
                         week, you can push harder and potentially succeed a week early, or more. Now they're achievable, but you can still push more if you want.
                     </Typography>
-                    <Typography variant="h5" sx={{ textTransform: 'none' }}>Conclusion</Typography>
+                    <br/>
+                    <Typography variant="h5" sx={{ textTransform: 'none' }} color="primary">Conclusion</Typography>
                     <Typography variant="body1" sx={{ textTransform: 'none' }}>
                         So now you know a bit more about setting goals you can succeed at easier, so why not give it a try. Put all these steps into practice and just wait for
                         the results.
