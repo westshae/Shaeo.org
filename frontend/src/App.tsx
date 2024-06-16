@@ -9,7 +9,7 @@ import { Box, CssBaseline } from '@mui/material';
 import GoalSetting from './Pages/Resources/GoalSetting';
 import Upgrade from './Pages/Upgrade';
 function App() {
-  document.title = "WLR Coffee"
+  document.title = "Shaeo.org"
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
