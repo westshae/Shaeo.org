@@ -8,16 +8,9 @@ import { theme } from './Components/Theme';
 import { Box, CssBaseline } from '@mui/material';
 import GoalSetting from './Pages/Resources/GoalSetting';
 import Upgrade from './Pages/Upgrade';
-import { Helmet } from 'react-helmet';
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>My Title</title>
-        <meta name="description" content="Helmet application" />
-      </Helmet>
-
       <CssBaseline />
       <Box sx={{ mx: "20%", my: "1rem" }}>
         <Router>
