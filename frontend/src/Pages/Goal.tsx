@@ -133,10 +133,10 @@ function Goal() {
     event.preventDefault();
     if (goal_id && actionMode == "update") {
       updateUserGoal(session, parseInt(goal_id), formGoalValues)
-      navigate("/dashboard")
+      navigate("/")
     } else if (actionMode == "create") {
       addUserGoal(session, formGoalValues)
-      navigate("/dashboard")
+      navigate("/")
     }
   }
 

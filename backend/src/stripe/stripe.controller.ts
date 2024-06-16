@@ -13,6 +13,7 @@ export class StripeController {
 
   @Post("getPaymentLink")
   async getPaymentLink(@Body() body){
+    if(!body.session) return;
     const result = await this.stripeService.createPaymentLink(body.session)
     return result;
   }
@@ -31,6 +32,7 @@ export class StripeController {
 
   @Get("isUserPremium")
   async isUserPremium(@Query() query) {
+    if(!query.session) return;
     const result = await this.stripeService.isUserPremium(query.session);
     return result;
   }
