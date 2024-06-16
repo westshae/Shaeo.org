@@ -23,6 +23,7 @@ const updateMeta = () => {
 function App() {
   document.title = "Shaeo.org"
   const metaContent = document.querySelector('meta[name="content"]')?.setAttribute("content", "This is content")
+  const metaContentTest = document.querySelector('meta[name="description"]')?.setAttribute("content", "This is description")
 
   return (
     <ThemeProvider theme={theme}>
