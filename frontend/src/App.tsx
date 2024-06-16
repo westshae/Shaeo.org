@@ -8,8 +8,22 @@ import { theme } from './Components/Theme';
 import { Box, CssBaseline } from '@mui/material';
 import GoalSetting from './Pages/Resources/GoalSetting';
 import Upgrade from './Pages/Upgrade';
+const updateMeta = () => {
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute("content", "This is the new description");
+  } else {
+    const newMetaDescription = document.createElement('meta');
+    newMetaDescription.name = "description";
+    newMetaDescription.content = "This is the new description";
+    document.head.appendChild(newMetaDescription);
+  }
+
+}
 function App() {
   document.title = "Shaeo.org"
+  const metaContent = document.querySelector('meta[name="content"]')?.setAttribute("content", "This is content")
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
