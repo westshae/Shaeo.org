@@ -10,14 +10,12 @@ import GoalSetting from './Pages/Resources/GoalSetting';
 import Upgrade from './Pages/Upgrade';
 import { Helmet } from 'react-helmet';
 function App() {
-  document.title = "Shaeo.org"
-
   return (
     <ThemeProvider theme={theme}>
       <Helmet>
         <meta charSet="utf-8" />
         <title>My Title</title>
-        <link rel="canonical" href="http://mysite.com/example" />
+        <meta name="description" content="Helmet application" />
       </Helmet>
 
       <CssBaseline />
