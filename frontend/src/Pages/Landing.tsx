@@ -3,7 +3,6 @@ import { Session, createClient } from "@supabase/supabase-js";
 import FlagIcon from '@mui/icons-material/Flag';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ResourceMenu from "../Components/ResourceMenu";
 import getAuth from "../Components/Authentication";
 
 function Landing() {
@@ -33,7 +32,7 @@ function Landing() {
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
-                    <ResourceMenu />
+                    <Button onClick={() => navigate("/resource")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Resources</Typography></Button>
                     {session &&
                         <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
                     }
@@ -51,7 +50,7 @@ function Landing() {
             <Container>
                 <Box>
                     <Typography variant="h2" sx={{ textTransform: 'none', textAlign: 'center' }}>Helping set goals you'll
-                        <Typography component="span"variant="h2" color="primary" sx={{ textTransform: 'none', textAlign: 'center' }}>
+                        <Typography component="span" variant="h2" color="primary" sx={{ textTransform: 'none', textAlign: 'center' }}>
                             {' '}actually achieve
                         </Typography>
                     </Typography>
@@ -69,26 +68,26 @@ function Landing() {
                                 No More...
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                            {' '}                   <Typography variant="h6" component="span" color="primary">
-                                Unspecific 
+                                {' '}                   <Typography variant="h6" component="span" color="primary">
+                                    Unspecific
                                 </Typography>
                                 {' '} Goals
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                            {' '}                   <Typography variant="h6" component="span" color="primary">
-                                Bad 
+                                {' '}                   <Typography variant="h6" component="span" color="primary">
+                                    Bad
                                 </Typography>
                                 {' '} Metrics
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                            {' '}                   <Typography variant="h6" component="span" color="primary">
-                                Impossible 
+                                {' '}                   <Typography variant="h6" component="span" color="primary">
+                                    Impossible
                                 </Typography>
                                 {' '} to achieve goals
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
                                 Deadlines that make it {' '}                   <Typography variant="h6" component="span" color="primary">
-                                hard to succeed 
+                                    hard to succeed
                                 </Typography>
                                 {' '}
                             </Typography>
@@ -107,10 +106,10 @@ function Landing() {
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
                                 I've been working on self-improvement for the past {' '}                   <Typography variant="h6" component="span" color="primary">
-                                5 years 
+                                    5 years
                                 </Typography>
                                 , more recently focusing on {' '}                   <Typography variant="h6" component="span" color="primary">
-                                giving advice 
+                                    giving advice
                                 </Typography>
                                 {' '} to people based on what
                                 I've learnt.
@@ -119,7 +118,7 @@ function Landing() {
                         <CardContent sx={{ width: "50%" }}>
                             <Typography variant="h5" sx={{ textTransform: 'none' }}>
                                 What people {' '}                   <Typography variant="h5" component="span" color="primary">
-                                fail 
+                                    fail
                                 </Typography>
                                 {' '} on?
                             </Typography>
@@ -134,27 +133,27 @@ function Landing() {
                     <Card sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', height: "100%" }}>
                         <CardContent sx={{ width: "50%" }}>
                             <Typography variant="h5" sx={{ textTransform: 'none' }}>
-                            {' '}                   <Typography variant="h5" component="span" color="primary">
-                                Free 
+                                {' '}                   <Typography variant="h5" component="span" color="primary">
+                                    Free
                                 </Typography>
                                 {' '} Tier
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                                - Access to 
+                                - Access to
                                 {' '}<Typography variant="h6" component="span" color="primary">
                                     1
                                 </Typography>
                                 {' '} concurrent goal
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                                - {' '}                   
+                                - {' '}
                                 <Typography variant="h6" component="span" color="primary">
                                     Unlimited
                                 </Typography>
                                 {' '} access to resources
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                                - {' '}                   
+                                - {' '}
                                 <Typography variant="h6" component="span" color="primary">
                                     Unlimited
                                 </Typography>
@@ -163,27 +162,27 @@ function Landing() {
                         </CardContent>
                         <CardContent sx={{ width: "50%" }}>
                             <Typography variant="h5" sx={{ textTransform: 'none' }}>
-                            {' '}                   <Typography variant="h5" component="span" color="primary">
-                                $30 
+                                {' '}                   <Typography variant="h5" component="span" color="primary">
+                                    $30
                                 </Typography>
                                 {' '} Annual Access
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                                - Access to {' '}                   
+                                - Access to {' '}
                                 <Typography variant="h6" component="span" color="primary">
                                     Unlimited
                                 </Typography>
                                 {' '} concurrent goal
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                                - {' '}                   
+                                - {' '}
                                 <Typography variant="h6" component="span" color="primary">
                                     Unlimited
                                 </Typography>
                                 {' '} access to resources
                             </Typography>
                             <Typography variant="h6" sx={{ textTransform: 'none' }}>
-                                - {' '}                   
+                                - {' '}
                                 <Typography variant="h6" component="span" color="primary">
                                     Unlimited
                                 </Typography>

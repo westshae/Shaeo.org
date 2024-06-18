@@ -6,8 +6,8 @@ import Goal from "./Pages/Goal"
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './Components/Theme';
 import { Box, CssBaseline } from '@mui/material';
-import GoalSetting from './Pages/Resources/GoalSetting';
 import Upgrade from './Pages/Upgrade';
+import Resource from './Pages/Resource';
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -20,7 +20,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/:action/:goal_id" element={<Goal />} />
             <Route path="/dashboard/:action" element={<Goal />} />
-            <Route path="/resources/goalsetting" element={<GoalSetting />} />
+            <Route path="/resource" element={<Resource />} />
             <Route path="/upgrade" element={<Upgrade />} />
           </Routes>
         </Router>

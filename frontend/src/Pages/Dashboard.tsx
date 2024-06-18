@@ -8,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 import { GetGoalInterface } from "../Components/Interfaces";
 import dayjs from "dayjs";
-import ResourceMenu from "../Components/ResourceMenu";
 import getAuth from "../Components/Authentication";
 
 function Dashboard() {
@@ -61,7 +60,7 @@ function Dashboard() {
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
-                    <ResourceMenu />
+                    <Button onClick={() => navigate("/resource")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Resources</Typography></Button>
                     {session &&
                         <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
                     }
