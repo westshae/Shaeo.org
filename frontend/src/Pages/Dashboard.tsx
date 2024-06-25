@@ -9,6 +9,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import { GetGoalInterface } from "../Components/Interfaces";
 import dayjs from "dayjs";
 import getAuth from "../Components/Authentication";
+import FirefoxWarning from "../Components/FirefoxWarning";
 
 function Dashboard() {
     const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
@@ -75,6 +76,7 @@ function Dashboard() {
                     <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Logout</Typography></Button>
                 </Box>
             </Toolbar>
+            <FirefoxWarning/>
             <Grid container spacing={2} >
                 {session && goals.length >= 1 && !isUserPremium &&
                     <Grid item xs={isMobile ? 12 : 6}>
