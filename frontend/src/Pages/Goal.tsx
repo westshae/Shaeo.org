@@ -13,6 +13,7 @@ import getAuth from "../Components/Authentication"
 
 function Goal() {
   const { action, goal_id } = useParams();
+  const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
 
   const [session, setSession] = useState<Session | null>(null)
   const [hasFieldsUpdated, setHasFieldsUpdated] = useState<boolean>(false);
@@ -231,16 +232,21 @@ function Goal() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0' }}>
+        {isMobile &&
+          <Button onClick={() => navigate("/")}><FlagIcon /></Button>
+        }
+        {!isMobile &&
+          <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+        }
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
           <Button onClick={() => navigate("/resource")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Resources</Typography></Button>
-          {session &&
+          {session && !isMobile &&
             <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
           }
           <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
-          <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
-          {actionMode == "update" && hasFieldsUpdated &&
+          <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Logout</Typography></Button>
+          {actionMode == "update" && hasFieldsUpdated && !isMobile && 
             <Button onClick={handleUpdateMode}><Typography variant="h6" sx={{ textTransform: 'none' }}>Reset Fields</Typography></Button>
 
           }

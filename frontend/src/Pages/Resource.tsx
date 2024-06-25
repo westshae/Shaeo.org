@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import getAuth from '../Components/Authentication';
 
 function Resource() {
+    const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
     const [session, setSession] = useState<Session | null>(null)
     const navigate = useNavigate()
 
@@ -29,24 +30,21 @@ function Resource() {
 
     return (
         <Box>
-            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0' }}>
+                {isMobile &&
+                    <Button onClick={() => navigate("/")}><FlagIcon /></Button>
+                }
+                {!isMobile &&
+                    <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+                }
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
-
-                    <Button onClick={() => navigate("/resource")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Resources</Typography></Button>
-
                     {session &&
                         <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
                     }
                     {session &&
                         <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
                     }
-                    {!session &&
-                        <Button onClick={() => navigate("/login")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign in</Typography></Button>
-                    }
-                    {session &&
-                        <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
-                    }
+                    <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Logout</Typography></Button>
                 </Box>
             </Toolbar>
             <Container>

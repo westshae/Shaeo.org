@@ -8,11 +8,17 @@ import { theme } from './Components/Theme';
 import { Box, CssBaseline } from '@mui/material';
 import Upgrade from './Pages/Upgrade';
 import Resource from './Pages/Resource';
+
+
+
 function App() {
+  const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
+  const normalStyle = {mx: "20%", my: "1rem"}
+  const mobileStyle = {mx: "0", my: "1rem"}
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ mx: "20%", my: "1rem" }}>
+      <Box sx={isMobile ? mobileStyle : normalStyle}>
         <Router>
           <Routes>
             <Route path="/" element={<Landing />} />

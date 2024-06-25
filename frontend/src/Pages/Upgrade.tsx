@@ -7,6 +7,7 @@ import getAuth from "../Components/Authentication";
 import { getPaymentLink, getIsUserPremium } from "../Components/Api";
 
 function Upgrade() {
+    const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
     const [session, setSession] = useState<Session | null>(null)
     const [paymentLink, setPaymentLink] = useState<string | null>(null);
     const [isUserPremium, setIsUserPremium] = useState<boolean>(false);
@@ -45,19 +46,24 @@ function Upgrade() {
     }, [session])
 
     return (
-        <Container>
-            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+        <Box>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0' }}>
+                {isMobile &&
+                    <Button onClick={() => navigate("/")}><FlagIcon /></Button>
+                }
+                {!isMobile &&
+                    <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+                }
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
                     <Button onClick={() => navigate("/resource")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Resources</Typography></Button>
                     {session &&
                         <Button onClick={() => navigate("/dashboard")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Dashboard</Typography></Button>
                     }
                     {!session &&
-                        <Button onClick={() => navigate("/login")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign in</Typography></Button>
+                        <Button onClick={() => navigate("/login")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Login</Typography></Button>
                     }
                     {session &&
-                        <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
+                        <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Logout</Typography></Button>
                     }
                 </Box>
             </Toolbar>
@@ -66,7 +72,7 @@ function Upgrade() {
             <br />
             <Box>
                 <Card sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', height: "100%" }}>
-                    <CardContent sx={{ width: "50%" }}>
+                    <CardContent>
                         <Typography variant="h5" sx={{ textTransform: 'none' }}>
                             {' '}                   <Typography variant="h5" component="span" color="primary">
                                 Free
@@ -95,7 +101,10 @@ function Upgrade() {
                             {' '} progress updates on your goal
                         </Typography>
                     </CardContent>
-                    <CardContent sx={{ width: "50%" }}>
+                    </Card>
+                    <Card sx={{ width: "100%", textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', height: "100%" }}>
+
+                    <CardContent>
                         <Typography variant="h5" sx={{ textTransform: 'none' }}>
                             {' '}                   <Typography variant="h5" component="span" color="primary">
                                 $30
@@ -138,7 +147,7 @@ function Upgrade() {
 
 
 
-        </Container>
+        </Box>
     )
 }
 

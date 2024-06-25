@@ -11,6 +11,9 @@ import dayjs from "dayjs";
 import getAuth from "../Components/Authentication";
 
 function Dashboard() {
+    const isMobile = /Mobile|Android|iP(hone|od|ad)/i.test(navigator.userAgent);
+
+
     const [session, setSession] = useState<Session | null>(null)
     const [goals, setGoals] = useState<GetGoalInterface[]>([]);
     const [isUserPremium, setIsUserPremium] = useState<boolean>(false);
@@ -56,21 +59,25 @@ function Dashboard() {
     }, [session])
 
     return (
-        <Container>
-            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+        <Box>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0'}}>
+                {isMobile && 
+                    <Button onClick={() => navigate("/")}><FlagIcon /></Button>
+                }
+                {!isMobile && 
+                    <Button onClick={() => navigate("/")}><Typography variant="h5" sx={{ textTransform: 'none' }}><FlagIcon />Shaeo.org</Typography></Button>
+                }
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
                     <Button onClick={() => navigate("/resource")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Resources</Typography></Button>
                     {session &&
                         <Button onClick={() => navigate("/upgrade")}><Typography variant="h6" sx={{ textTransform: 'none' }}>Upgrade</Typography></Button>
                     }
-                    <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Sign Out</Typography></Button>
+                    <Button onClick={async () => await getAuth().auth.signOut()}><Typography variant="h6" sx={{ textTransform: 'none' }}>Logout</Typography></Button>
                 </Box>
-
             </Toolbar>
             <Grid container spacing={2} >
                 {session && goals.length >= 1 && !isUserPremium &&
-                    <Grid item xs={6}>
+                    <Grid item xs={isMobile ? 12 : 6}>
                         <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
                             <CardContent>
                                 <Typography color="primary" variant="h5" component="div">
@@ -81,7 +88,7 @@ function Dashboard() {
                     </Grid>
                 }
                 {session && (isUserPremium || goals.length < 1) &&
-                    <Grid item xs={6}>
+                    <Grid item xs={isMobile ? 12 : 6}>
                         <Card sx={{ maxWidth: 500, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: "100%" }} onClick={() => navigate("/dashboard/create")}>
                             <CardActionArea sx={{ height: "100%" }}>
                                 <CardContent>
@@ -95,7 +102,7 @@ function Dashboard() {
                     </Grid>
                 }
                 {goals.map((card: GetGoalInterface, index) => (
-                    <Grid item xs={6} key={index}>
+                    <Grid item xs={isMobile ? 12 : 6} key={index}>
                         <Card sx={{ height: "100%", position: 'relative' }} >
                             <IconButton
                                 aria-label="delete"
@@ -128,7 +135,7 @@ function Dashboard() {
                     </Grid>
                 ))}
             </Grid>
-        </Container>
+        </Box>
     )
 }
 
